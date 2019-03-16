@@ -14,19 +14,19 @@ class Cube:
     # B = [['20', '21'], ['22', '23']]
 
     # 3x3
-    # U = [[' 0', ' 1', ' 2'], [' 3', ' 4', ' 5'], [' 6', ' 7', ' 8']]
-    # L = [[' 9', '10', '11'], ['12', '13', '14'], ['15', '16', '17']]
-    # F = [['18', '19', '20'], ['21', '22', '23'], ['24', '25', '26']]
-    # R = [['27', '28', '29'], ['30', '31', '32'], ['33', '34', '35']]
-    # D = [['36', '37', '38'], ['39', '40', '41'], ['42', '43', '44']]
-    # B = [['45', '46', '47'], ['48', '49', '50'], ['51', '52', '53']]
+    U = [[' 0', ' 1', ' 2'], [' 3', ' 4', ' 5'], [' 6', ' 7', ' 8']]
+    L = [[' 9', '10', '11'], ['12', '13', '14'], ['15', '16', '17']]
+    F = [['18', '19', '20'], ['21', '22', '23'], ['24', '25', '26']]
+    R = [['27', '28', '29'], ['30', '31', '32'], ['33', '34', '35']]
+    D = [['36', '37', '38'], ['39', '40', '41'], ['42', '43', '44']]
+    B = [['45', '46', '47'], ['48', '49', '50'], ['51', '52', '53']]
 
-    R = []
-    L = []
-    U = []
-    D = []
-    F = []
-    B = []
+    # R = []
+    # L = []
+    # U = []
+    # D = []
+    # F = []
+    # B = []
 
     def __init__(self, n):
         """
@@ -41,20 +41,20 @@ class Cube:
         """
         self.n = n
 
-        for i in range(n):
-            self.R.append([])
-            self.L.append([])
-            self.U.append([])
-            self.D.append([])
-            self.F.append([])
-            self.B.append([])
-            for _ in range(n):
-                self.R[i].append('red   ')
-                self.L[i].append('orange')
-                self.U[i].append('yellow')
-                self.D[i].append('white ')
-                self.F[i].append('blue  ')
-                self.B[i].append('green ')
+        # for i in range(n):
+        #     self.R.append([])
+        #     self.L.append([])
+        #     self.U.append([])
+        #     self.D.append([])
+        #     self.F.append([])
+        #     self.B.append([])
+        #     for _ in range(n):
+        #         self.R[i].append('red   ')
+        #         self.L[i].append('orange')
+        #         self.U[i].append('yellow')
+        #         self.D[i].append('white ')
+        #         self.F[i].append('blue  ')
+        #         self.B[i].append('green ')
         self.cube = {'R': self.R,
                      'L': self.L,
                      'U': self.U,
@@ -77,28 +77,28 @@ class Cube:
         print()
 
     def successors(self):
-        suc = ['R', 'L', 'U', 'D', 'F', 'B']
+        suc = [['1', 'R'], ['1', 'L'], ['1', 'U'], ['1', 'D'], ['1', 'F'], ['1', 'B']]
         for i in range(2, int(self.n/2) + 1):
-            suc.append(str(i) + 'R')
-            suc.append(str(i) + 'L')
-            suc.append(str(i) + 'U')
-            suc.append(str(i) + 'D')
-            suc.append(str(i) + 'F')
-            suc.append(str(i) + 'B')
+            suc.append([str(i), 'R'])
+            suc.append([str(i), 'L'])
+            suc.append([str(i), 'U'])
+            suc.append([str(i), 'D'])
+            suc.append([str(i), 'F'])
+            suc.append([str(i), 'B'])
         return suc
 
     def scramble(self, n):
-        x = self.successors()
-        print(x)
+        suc = self.successors()
+        print(suc)
         z = None
         sequence = []
         for _ in range(n):
-            y = random.randint(0, len(x) - 1)
-            sequence.append([x[y], random.choice(['1', "-1", '2'])])
+            y = random.randint(0, len(suc) - 1)
+            sequence.append([suc[y], random.choice(['1', "-1", '2'])])
             if z:
-                x.append(z)
-            z = x[y]
-            x.pop(y)
+                suc.append(z)
+            z = suc[y]
+            suc.pop(y)
             self.move(sequence[len(sequence) - 1])
         return sequence
 
@@ -109,6 +109,7 @@ class Cube:
                [ 0                    , 1                     ]
                [[0   , 1      , 2    ], [0   , 1      , 2    ]]
         moves: [[face, rotação, linha], [face, rotação, linha]]
+        moves: [[face, rotação, linha], [face, rotação, linha], linha]
         """
         cube = self.cube.copy()
         for m in moves:
@@ -120,117 +121,103 @@ class Cube:
 
     # noinspection PyTypeChecker
     def move(self, suc):
-        n = self.n - 1
-        if suc[0] == 'R':
+        n = self.n - int(suc[0][0])
+        print(n)
+        if suc[0][0] == '1':
+            self.cube[suc[0][1]] = np.rot90(np.array(self.cube[suc[0][1]]), -int(suc[1])).tolist()
+
+        if suc[0][1] == 'R':
             if suc[1] == '1':
-                self.cube[suc[0]] = np.rot90(np.array(self.cube[suc[0]]), 3).tolist()
-                self.move_([[['F', 1, 0], ['U', 1, 0]],
-                            [['D', 1, 0], ['F', 1, 0]],
-                            [['B', 1, 0], ['D', 1, 0]],
-                            [['U', 1, 0], ['B', 1, 0]]])
+                self.move_([[['F', 3, n], ['U', 3, n]],
+                            [['D', 3, n], ['F', 3, n]],
+                            [['B', 3, n], ['D', 3, n]],
+                            [['U', 3, n], ['B', 3, n]]])
             elif suc[1] == '2':
-                self.cube[suc[0]] = np.rot90(np.array(self.cube[suc[0]]), 2).tolist()
-                self.move_([[['F', 1, 0], ['B', 1, 0]],
-                            [['B', 1, 0], ['F', 1, 0]],
-                            [['U', 1, 0], ['D', 1, 0]],
-                            [['D', 1, 0], ['U', 1, 0]]])
+                self.move_([[['F', 3, n], ['B', 3, n]],
+                            [['B', 3, n], ['F', 3, n]],
+                            [['U', 3, n], ['D', 3, n]],
+                            [['D', 3, n], ['U', 3, n]]])
             elif suc[1] == '-1':
-                self.cube[suc[0]] = np.rot90(np.array(self.cube[suc[0]]), 1).tolist()
-                self.move_([[['B', 1, 0], ['U', 1, 0]],
-                            [['D', 1, 0], ['B', 1, 0]],
-                            [['F', 1, 0], ['D', 1, 0]],
-                            [['U', 1, 0], ['F', 1, 0]]])
-        elif suc[0] == 'L':
+                self.move_([[['B', 3, n], ['U', 3, n]],
+                            [['D', 3, n], ['B', 3, n]],
+                            [['F', 3, n], ['D', 3, n]],
+                            [['U', 3, n], ['F', 3, n]]])
+        elif suc[0][1] == 'L':
             if suc[1] == '1':
-                self.cube[suc[0]] = np.rot90(np.array(self.cube[suc[0]]), 3).tolist()
-                self.move_([[['B', 3, 0], ['U', 3, 0]],
-                            [['D', 3, 0], ['B', 3, 0]],
-                            [['F', 3, 0], ['D', 3, 0]],
-                            [['U', 3, 0], ['F', 3, 0]]])
+                self.move_([[['B', 1, n], ['U', 1, n]],
+                            [['D', 1, n], ['B', 1, n]],
+                            [['F', 1, n], ['D', 1, n]],
+                            [['U', 1, n], ['F', 1, n]]])
             elif suc[1] == '2':
-                self.cube[suc[0]] = np.rot90(np.array(self.cube[suc[0]]), 2).tolist()
-                self.move_([[['F', 3, 0], ['B', 3, 0]],
-                            [['B', 3, 0], ['F', 3, 0]],
-                            [['U', 3, 0], ['D', 3, 0]],
-                            [['D', 3, 0], ['U', 3, 0]]])
+                self.move_([[['F', 1, n], ['B', 1, n]],
+                            [['B', 1, n], ['F', 1, n]],
+                            [['U', 1, n], ['D', 1, n]],
+                            [['D', 1, n], ['U', 1, n]]])
             elif suc[1] == '-1':
-                self.cube[suc[0]] = np.rot90(np.array(self.cube[suc[0]]), 1).tolist()
-                self.move_([[['F', 3, 0], ['U', 3, 0]],
-                            [['D', 3, 0], ['F', 3, 0]],
-                            [['B', 3, 0], ['D', 3, 0]],
-                            [['U', 3, 0], ['B', 3, 0]]])
-        elif suc[0] == 'U':
+                self.move_([[['F', 1, n], ['U', 1, n]],
+                            [['D', 1, n], ['F', 1, n]],
+                            [['B', 1, n], ['D', 1, n]],
+                            [['U', 1, n], ['B', 1, n]]])
+        elif suc[0][1] == 'U':
             if suc[1] == '1':
-                self.cube[suc[0]] = np.rot90(np.array(self.cube[suc[0]]), 3).tolist()
-                self.move_([[['R', 0, 0], ['F', 0, 0]],
-                            [['F', 0, 0], ['L', 0, 0]],
+                self.move_([[['R', 2, n], ['F', 2, n]],
+                            [['F', 2, n], ['L', 2, n]],
                             [['L', 2, n], ['B', 0, n]],
-                            [['B', 0, n], ['R', 0, 0]]])
+                            [['B', 0, n], ['R', 1, n]]])  # x
             elif suc[1] == '2':
-                self.cube[suc[0]] = np.rot90(np.array(self.cube[suc[0]]), 2).tolist()
                 self.move_([[['R', 2, n], ['L', 2, n]],
                             [['L', 0, 0], ['R', 0, 0]],
                             [['B', 2, 0], ['F', 0, 0]],
                             [['F', 2, n], ['B', 0, n]]])
             elif suc[1] == '-1':
-                self.cube[suc[0]] = np.rot90(np.array(self.cube[suc[0]]), 1).tolist()
                 self.move_([[['L', 0, 0], ['F', 0, 0]],
                             [['F', 0, 0], ['R', 0, 0]],
                             [['R', 0, 0], ['B', 0, n]],
                             [['B', 2, 0], ['L', 0, 0]]])
-        elif suc[0] == 'D':
+        elif suc[0][1] == 'D':
             if suc[1] == '1':
-                self.cube[suc[0]] = np.rot90(np.array(self.cube[suc[0]]), 3).tolist()
                 self.move_([[['L', 0, n], ['F', 0, n]],
                             [['F', 2, 0], ['R', 2, 0]],
                             [['R', 2, 0], ['B', 0, 0]],
                             [['B', 0, 0], ['L', 2, 0]]])
             elif suc[1] == '2':
-                self.cube[suc[0]] = np.rot90(np.array(self.cube[suc[0]]), 2).tolist()
                 self.move_([[['R', 0, n], ['L', 0, n]],
                             [['L', 0, n], ['R', 0, n]],
                             [['B', 0, 0], ['F', 2, 0]],
                             [['F', 2, 0], ['B', 0, 0]]])
             elif suc[1] == '-1':
-                self.cube[suc[0]] = np.rot90(np.array(self.cube[suc[0]]), 1).tolist()
                 self.move_([[['R', 0, n], ['F', 0, n]],
                             [['F', 0, n], ['L', 0, n]],
                             [['L', 2, 0], ['B', 0, 0]],
                             [['B', 2, n], ['R', 0, n]]])
-        elif suc[0] == 'F':
+        elif suc[0][1] == 'F':
             if suc[1] == '1':
-                self.cube[suc[0]] = np.rot90(np.array(self.cube[suc[0]]), 3).tolist()
                 self.move_([[['U', 0, n], ['R', 1, n]],
                             [['R', 3, 0], ['D', 0, 0]],
                             [['D', 0, 0], ['L', 1, 0]],
                             [['L', 3, n], ['U', 0, n]]])
             elif suc[1] == '2':
-                self.cube[suc[0]] = np.rot90(np.array(self.cube[suc[0]]), 2).tolist()
                 self.move_([[['R', 3, 0], ['L', 1, 0]],
                             [['L', 1, 0], ['R', 3, 0]],
                             [['D', 2, n], ['U', 0, n]],
                             [['U', 2, 0], ['D', 0, 0]]])
             elif suc[1] == '-1':
-                self.cube[suc[0]] = np.rot90(np.array(self.cube[suc[0]]), 1).tolist()
                 self.move_([[['U', 2, 0], ['L', 1, 0]],
                             [['L', 1, 0], ['D', 0, 0]],
                             [['D', 0, 0], ['R', 3, 0]],
                             [['R', 1, n], ['U', 0, n]]])
-        elif suc[0] == 'B':
+        elif suc[0][1] == 'B':
             if suc[1] == '1':
-                self.cube[suc[0]] = np.rot90(np.array(self.cube[suc[0]]), 3).tolist()
                 self.move_([[['L', 1, n], ['D', 0, n]],
                             [['D', 2, 0], ['R', 1, 0]],
                             [['R', 1, 0], ['U', 0, 0]],
                             [['U', 0, 0], ['L', 3, 0]]])
             elif suc[1] == '2':
-                self.cube[suc[0]] = np.rot90(np.array(self.cube[suc[0]]), 2).tolist()
                 self.move_([[['R', 3, n], ['L', 1, n]],
                             [['L', 1, n], ['R', 3, n]],
                             [['D', 2, 0], ['U', 0, 0]],
                             [['U', 2, n], ['D', 0, n]]])
             elif suc[1] == '-1':
-                self.cube[suc[0]] = np.rot90(np.array(self.cube[suc[0]]), 1).tolist()
                 self.move_([[['U', 2, n], ['R', 3, n]],
                             [['R', 3, n], ['D', 0, n]],
                             [['D', 0, n], ['L', 1, n]],
