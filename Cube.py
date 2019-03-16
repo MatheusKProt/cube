@@ -113,15 +113,15 @@ class Cube:
         """
         cube = self.cube.copy()
         for m in moves:
-            y = np.rot90(np.array(self.cube[m[1][0]]), m[1][1])
-            y[m[1][2]] = np.rot90(np.array(self.cube[m[0][0]]), m[0][1])[m[0][2]]
+            y = np.rot90(np.array(cube[m[1][0]]), m[1][1])
+            y[m[2]] = np.rot90(np.array(cube[m[0][0]]), m[0][1])[m[2]][::m[0][2]]
             cube[m[1][0]] = np.rot90(y, -m[1][1]).tolist()
 
         self.cube = cube
 
     # noinspection PyTypeChecker
     def move(self, suc):
-        n = self.n - int(suc[0][0])
+        n = int(suc[0][0]) - 1
         print(n)
         if suc[0][0] == '1':
             self.cube[suc[0][1]] = np.rot90(np.array(self.cube[suc[0][1]]), -int(suc[1])).tolist()
