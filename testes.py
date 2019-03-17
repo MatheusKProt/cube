@@ -1,15 +1,39 @@
-import numpy as np
+def bfs_shortest_path(graph, start, goal):
+    explored = []
+    queue = [[start]]
 
-if __name__ == '__main__':
-    cube = {'F': [[1, 2], [3, 4]], 'U': [[5, 6], [7, 8]]}
-    for i in range(2):
-        print(cube['F'][i], cube['U'][i])
-    #   [[Face que vai ser pego, Rotacao do que vai ser pego(-1, 0, 1, 2), ordem(1, -1)],[Face que recebe, Rotacao para receber], linha]
-    m = [['F', -1, 1], ['U', 2], 0]
+    if start == goal:
+        return "That was easy! Start = goal"
 
-    y = np.rot90(np.array(cube[m[1][0]]), m[1][1])
-    y[m[2]] = np.rot90(np.array(cube[m[0][0]]), m[0][1])[m[2]][::m[0][2]]
-    cube[m[1][0]] = np.rot90(y, -m[1][1]).tolist()
+    while queue:
+        path = queue.pop(0)
+        node = path[-1]
+        print()
+        print(explored)
+        if node not in explored:
+            neighbours = graph[node]
+            print(neighbours)
+            for neighbour in neighbours:
+                new_path = list(path)
+                new_path.append(neighbour)
+                queue.append(new_path)
+                if neighbour == goal:
+                    return new_path
 
-    for i in range(2):
-        print(cube['F'][i], cube['U'][i])
+            explored.append(node)
+
+    return "So sorry, but a connecting path doesn't exist :("
+
+
+graph = {'A': ['B', 'C'],
+         'B': ['D', 'E'],
+         'C': ['F', 'G'],
+         'D': ['H', 'I'],
+         'E': ['J', 'K'],
+         'F': [],
+         'G': [],
+         'H': [],
+         'I': [],
+         'J': [],
+         'k': []}
+print(bfs_shortest_path(graph, 'A', 'J'))  # returns ['G', 'C', 'A', 'B', 'D']
