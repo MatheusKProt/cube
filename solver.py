@@ -1,3 +1,16 @@
+class Node:
+    """A node class for A* Pathfinding"""
+
+    def __init__(self, parent=None, position=None):
+        self.parent = parent
+        self.position = position
+
+        self.g = 0
+        self.h = 0
+        self.f = 0
+
+    def __eq__(self, other):
+        return self.position == other.position
 
 
 class Solver:
@@ -10,34 +23,54 @@ class Solver:
         if self.algorithm == 'BFS':
             return self.BFS()
         elif self.algorithm == 'DFS':
-            exit(1)
+            return self.DFS()
         elif self.algorithm == 'IDFS':
             exit(1)
         elif self.algorithm == 'UCS':
             exit(1)
         elif self.algorithm == 'A*':
-            exit(1)
+            return self.MEU()
 
     def BFS(self):
-        open_set = [['']]
-        closed_set = []
+        queue = [['']]
+        explored = []
 
-        while open_set:
-            path = open_set.pop(0)
+        while queue:
             self.num_visited += 1
+            path = queue.pop(0)
+            node = path[-1]
 
-            if self.problem.isTarget(path):
-                print(f'Solution found! {self.num_visited} nodes visited')
-                return path
+            for neighbour in self.problem.successors():
+                new_path = list(path)
+                new_path.append(neighbour)
+                queue.append(new_path)
 
-            for new_path in self.problem.getSuccessors(path):
+                if self.problem.is_target(new_path[1:]):
+                    print(f'Solution found! {self.num_visited} nodes visited')
+                    return new_path[1:]
 
-                if new_path in closed_set:
-                    continue
+            explored.append(node)
 
-                if new_path not in open_set:
-                    open_set.append(new_path)
+        return "So sorry, but a connecting path doesn't exist :("
 
-            closed_set.append(path)
+    def DFS(self):
+        queue = [['']]
+        explored = []
 
-        return None
+        while queue:
+            self.num_visited += 1
+            path = queue.pop(len(queue) - 1)
+            node = path[-1]
+
+            for neighbour in self.problem.successors():
+                new_path = list(path)
+                new_path.append(neighbour)
+                queue.append(new_path)
+
+                if self.problem.is_target(new_path[1:]):
+                    print(f'Solution found! {self.num_visited} nodes visited')
+                    return new_path[1:]
+
+            explored.append(node)
+
+        return "So sorry, but a connecting path doesn't exist :("
