@@ -1,3 +1,7 @@
+import itertools
+import time
+
+
 class Node:
     """A node class for A* Pathfinding"""
 
@@ -20,57 +24,53 @@ class Solver:
         self.problem = problem
 
     def solve(self):
+        result = Node
+        start = time.time()
+        print(f'Inicio do {self.algorithm}: {time.strftime("%d/%m/%Y %H:%M:%S", time.localtime())}')
         if self.algorithm == 'BFS':
-            return self.BFS()
-        elif self.algorithm == 'DFS':
-            return self.DFS()
+            result = self.BFS()
         elif self.algorithm == 'IDFS':
-            exit(1)
+            result = self.IDFS()
         elif self.algorithm == 'UCS':
             exit(1)
         elif self.algorithm == 'A*':
-            return self.MEU()
+            exit(1)
+        end = time.time()
+        print('Tempo total:', end - start)
+        return result
 
     def BFS(self):
-        queue = [['']]
+        queue = ['']
         explored = []
-
         while queue:
             self.num_visited += 1
             path = queue.pop(0)
-            node = path[-1]
-
+            node = path
             for neighbour in self.problem.successors():
-                new_path = list(path)
-                new_path.append(neighbour)
-                queue.append(new_path)
-
-                if self.problem.is_target(new_path[1:]):
+                new_path = path
+                new_path += str(neighbour) + ','
+                if new_path not in queue:
+                    queue.append(new_path)
+                if self.problem.is_target(new_path):
                     print(f'Solution found! {self.num_visited} nodes visited')
-                    return new_path[1:]
-
+                    return new_path
             explored.append(node)
 
         return "So sorry, but a connecting path doesn't exist :("
 
-    def DFS(self):
-        queue = [['']]
-        explored = []
+    def IDFS(self):
+        def DFS(route, depth):
+            if depth == 0:
+                return
+            if self.problem.is_target(route):
+                return route
+            for move in self.problem.successors():
+                if move not in route:
+                    next_route = DFS(route + move + ',', depth - 1)
+                    if next_route:
+                        return next_route
 
-        while queue:
-            self.num_visited += 1
-            path = queue.pop(len(queue) - 1)
-            node = path[-1]
-
-            for neighbour in self.problem.successors():
-                new_path = list(path)
-                new_path.append(neighbour)
-                queue.append(new_path)
-
-                if self.problem.is_target(new_path[1:]):
-                    print(f'Solution found! {self.num_visited} nodes visited')
-                    return new_path[1:]
-
-            explored.append(node)
-
-        return "So sorry, but a connecting path doesn't exist :("
+        for depth in itertools.count():
+            route = DFS('', depth)
+            if route:
+                return route
