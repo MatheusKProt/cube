@@ -59,18 +59,24 @@ class Solver:
         return "So sorry, but a connecting path doesn't exist :("
 
     def IDFS(self):
-        def DFS(route, depth):
-            if depth == 0:
-                return
-            if self.problem.is_target(route):
-                return route
-            for move in self.problem.successors():
-                if move not in route:
-                    next_route = DFS(route + move + ',', depth - 1)
-                    if next_route:
-                        return next_route
-
         for depth in itertools.count():
-            route = DFS('', depth)
+            route, remaining = self.DFS('', depth)
             if route:
                 return route
+            elif not remaining:
+                return None
+
+    def DFS(self, route, depth):
+        if depth == 0:
+            if self.problem.is_target(route):
+                return route, True
+            else:
+                return None, True
+        any_remaining = False
+        for move in self.problem.successors():
+            found, remaining = self.DFS(route + move + ',', depth - 1)
+            if found:
+                return found, True
+            if remaining:
+                any_remaining = True
+        return None, any_remaining
