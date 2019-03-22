@@ -2,8 +2,7 @@ from cube import Cube
 from solver import Solver
 
 if __name__ == '__main__':
-    cube = Cube(5, 3)
-    cube.print_cube()
+    cube = Cube(3, 1)
     cube.print_sequence()
     solver = Solver(cube, 'IDFS')
     cube.print_sequence(solver.solve())

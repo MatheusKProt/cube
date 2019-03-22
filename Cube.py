@@ -84,6 +84,7 @@ class Cube:
             sequence = self.sequence
             text = "Scramble: "
         for seq in sequence.split(',')[:-1]:
+            seq = seq.split('-')
             if seq[0] == '1':
                 text += seq[1]
             else:
@@ -97,31 +98,31 @@ class Cube:
         print(text)
 
     def successors(self, scramble=False):
-        suc = ['1R1', '1R2', '1R3',
-               '1L1', '1L2', '1L3',
-               '1U1', '1U2', '1U3',
-               '1D1', '1D2', '1D3',
-               '1F1', '1F2', '1F3',
-               '1B1', '1B2', '1B3']
+        suc = ['1-R-1', '1-R-2', '1-R-3',
+               '1-L-1', '1-L-2', '1-L-3',
+               '1-U-1', '1-U-2', '1-U-3',
+               '1-D-1', '1-D-2', '1-D-3',
+               '1-F-1', '1-F-2', '1-F-3',
+               '1-B-1', '1-B-2', '1-B-3']
         for i in range(2, int(self.n/2) + 1):
-            suc.append(f'{i}R1')
-            suc.append(f'{i}R2')
-            suc.append(f'{i}R3')
-            suc.append(f'{i}L1')
-            suc.append(f'{i}L2')
-            suc.append(f'{i}L3')
-            suc.append(f'{i}U1')
-            suc.append(f'{i}U2')
-            suc.append(f'{i}U3')
-            suc.append(f'{i}D1')
-            suc.append(f'{i}D2')
-            suc.append(f'{i}D3')
-            suc.append(f'{i}F1')
-            suc.append(f'{i}F2')
-            suc.append(f'{i}F3')
-            suc.append(f'{i}B1')
-            suc.append(f'{i}B2')
-            suc.append(f'{i}B3')
+            suc.append(f'{i}-R-1')
+            suc.append(f'{i}-R-2')
+            suc.append(f'{i}-R-3')
+            suc.append(f'{i}-L-1')
+            suc.append(f'{i}-L-2')
+            suc.append(f'{i}-L-3')
+            suc.append(f'{i}-U-1')
+            suc.append(f'{i}-U-2')
+            suc.append(f'{i}-U-3')
+            suc.append(f'{i}-D-1')
+            suc.append(f'{i}-D-2')
+            suc.append(f'{i}-D-3')
+            suc.append(f'{i}-F-1')
+            suc.append(f'{i}-F-2')
+            suc.append(f'{i}-F-3')
+            suc.append(f'{i}-B-1')
+            suc.append(f'{i}-B-2')
+            suc.append(f'{i}-B-3')
 
         if scramble:
             return suc
@@ -170,6 +171,7 @@ class Cube:
     def move(self, cube, suc: list):
         self.cube = cube
         row = int(suc[0]) - 1
+        suc = str(suc).split('-')
         if suc[0] == '1':
             self.cube[suc[1]] = np.rot90(np.array(self.cube[suc[1]]), -int(suc[2])).tolist()
 
