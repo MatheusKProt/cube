@@ -20,7 +20,7 @@ class Cube:
     # D = [['36', '37', '38'], ['39', '40', '41'], ['42', '43', '44']]
     # B = [['45', '46', '47'], ['48', '49', '50'], ['51', '52', '53']]
 
-    def __init__(self, n: int, num_moves: int):
+    def __init__(self, n: int, num_moves=1, sequence=None):
         """
         Front => Blue
         Down => White
@@ -61,7 +61,10 @@ class Cube:
                      'F': self.F,
                      'B': self.B}
         self.goal = self.cube
-        self.scramble(self.cube, num_moves)
+        if sequence:
+            self.scramble(self.cube, num_moves, sequence)
+        else:
+            self.scramble(self.cube, num_moves)
         self.start = self.cube
 
     def print_cube(self):
@@ -95,7 +98,7 @@ class Cube:
                 text += "' "
             else:
                 text += " "
-        print(text)
+        print(f'{text}\n')
 
     def successors(self, scramble=False):
         suc = ['1-R-1', '1-R-2', '1-R-3',
@@ -124,36 +127,43 @@ class Cube:
             suc.append(f'{i}-B-2')
             suc.append(f'{i}-B-3')
 
-        if scramble:
-            return suc
-        else:
-            return random.sample(suc, len(suc))
+        return suc
+        # if scramble:
+        #     return suc
+        # else:
+        #     return random.sample(suc, len(suc))
 
-    def scramble(self, cube, num_moves):
-        suc = self.successors(True)
-        a = []
-        for _ in range(num_moves):
-            i = random.randint(0, len(suc) - 1)
-            if suc[i][2] == '1':
-                x, y, z = i, i + 1, i + 2
-            elif suc[i][2] == '2':
-                x, y, z = i - 1, i, i + 1
-            else:
-                x, y, z = i - 2, i - 1, i
-            self.sequence += suc[i] + ','
-            cube = self.move(cube, suc[i])
-            if a:
-                for aa in a:
-                    suc.append(aa)
-                a.pop(0)
-                a.pop(0)
-                a.pop(0)
-            a.append(suc[x])
-            a.append(suc[y])
-            a.append(suc[z])
-            suc.pop(x)
-            suc.pop(x)
-            suc.pop(x)
+    def scramble(self, cube, num_moves, sequence=None):
+        if sequence:
+            for seq in sequence.split(','):
+                cube = self.move(cube, seq)
+            self.sequence = sequence + ','
+        else:
+            suc = self.successors(True)
+            a = []
+            for _ in range(num_moves):
+                i = random.randint(0, len(suc) - 1)
+                s = suc[i].split('-')
+                if s[2] == '1':
+                    x, y, z = i, i + 1, i + 2
+                elif s[2] == '2':
+                    x, y, z = i - 1, i, i + 1
+                else:
+                    x, y, z = i - 2, i - 1, i
+                self.sequence += str(suc[i]) + ','
+                cube = self.move(cube, suc[i])
+                if a:
+                    for aa in a:
+                        suc.append(aa)
+                    a.pop(0)
+                    a.pop(0)
+                    a.pop(0)
+                a.append(suc[x])
+                a.append(suc[y])
+                a.append(suc[z])
+                suc.pop(x)
+                suc.pop(x)
+                suc.pop(x)
 
     def move_(self, moves: list, row):
         """
@@ -170,8 +180,8 @@ class Cube:
     # noinspection PyTypeChecker
     def move(self, cube, suc: list):
         self.cube = cube
-        row = int(suc[0]) - 1
         suc = str(suc).split('-')
+        row = int(suc[0]) - 1
         if suc[0] == '1':
             self.cube[suc[1]] = np.rot90(np.array(self.cube[suc[1]]), -int(suc[2])).tolist()
 
