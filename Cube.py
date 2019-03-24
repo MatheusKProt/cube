@@ -40,6 +40,7 @@ class Cube:
         self.sequence = ''
         self.n = n
 
+        count = 0
         for i in range(n):
             self.R.append([])
             self.L.append([])
@@ -48,19 +49,20 @@ class Cube:
             self.F.append([])
             self.B.append([])
             for _ in range(n):
-                self.R[i].append('red   ')
-                self.L[i].append('orange')
-                self.U[i].append('yellow')
-                self.D[i].append('white ')
-                self.F[i].append('blue  ')
-                self.B[i].append('green ')
+                count += 1
+                self.R[i].append(f'R{count}')
+                self.L[i].append(f'L{count}')
+                self.U[i].append(f'U{count}')
+                self.D[i].append(f'D{count}')
+                self.F[i].append(f'F{count}')
+                self.B[i].append(f'B{count}')
         self.cube = {'R': self.R,
                      'L': self.L,
                      'U': self.U,
                      'D': self.D,
                      'F': self.F,
                      'B': self.B}
-        self.goal = self.cube
+        self.goal = self.cube.copy()
         if sequence:
             self.scramble(self.cube, num_moves, sequence)
         else:
@@ -100,7 +102,7 @@ class Cube:
                 text += " "
         print(f'{text}\n')
 
-    def successors(self, scramble=False):
+    def successors(self):
         suc = ['1-R-1', '1-R-2', '1-R-3',
                '1-L-1', '1-L-2', '1-L-3',
                '1-U-1', '1-U-2', '1-U-3',
@@ -139,7 +141,7 @@ class Cube:
                 cube = self.move(cube, seq)
             self.sequence = sequence + ','
         else:
-            suc = self.successors(True)
+            suc = self.successors()
             a = []
             for _ in range(num_moves):
                 i = random.randint(0, len(suc) - 1)
@@ -177,7 +179,6 @@ class Cube:
 
         self.cube = cube
 
-    # noinspection PyTypeChecker
     def move(self, cube, suc: list):
         self.cube = cube
         suc = str(suc).split('-')
@@ -284,68 +285,12 @@ class Cube:
         return self.cube
 
     def is_target(self, path):
-        board = self.apply_path(path)
-        return self.goal == board
+        cube = self.apply_path(path)
+        return self.goal == cube
 
     def apply_path(self, path):
-        board = self.start.copy()
+        cube = self.start.copy()
         for p in path.split(',')[:-1]:
-            board = self.move(board, p)
+            cube = self.move(cube, p)
 
-        return board
-
-    def get_numeric(self, face):
-        """
-        r 0
-        o 1
-        y 2
-        w 3
-        b 4
-        g 5
-
-        :return: Cube
-        """
-        cube = self.cube
-        matrix = []
-        for r in cube[face]:
-            vector = []
-            for i in r:
-                vector.append(set_numeric(i))
-            matrix.append(vector)
-        return matrix
-
-    def numeric_sequence(self, sequence=None):
-        vector = []
-        for r in sequence:
-            for i in r:
-                vector.append(int(set_numeric(i)))
-        return vector
-
-
-def set_numeric(cor):
-    if cor == 'red   ':
-        return 0
-    elif cor == 'orange':
-        return 1
-    elif cor == 'yellow':
-        return 2
-    elif cor == 'white ':
-        return 3
-    elif cor == 'blue  ':
-        return 4
-    elif cor == 'green ':
-        return 5
-    elif cor == 'R':
-        return 6
-    elif cor == 'L':
-        return 7
-    elif cor == 'U':
-        return 8
-    elif cor == 'D':
-        return 9
-    elif cor == 'F':
-        return 10
-    elif cor == 'B':
-        return 11
-    else:
-        return cor
+        return cube

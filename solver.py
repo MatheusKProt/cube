@@ -4,10 +4,11 @@ from queue import PriorityQueue
 
 
 class Solver:
-    def __init__(self, problem, algorithm='BFS'):
+    def __init__(self, problem, algorithm='BFS', heuristic=0):
         self.num_visited = 0
         self.algorithm = algorithm
         self.problem = problem
+        self.heuristic = heuristic
 
     def solve(self):
         result = None
@@ -88,42 +89,97 @@ class Solver:
                 if self.problem.is_target(new_path):
                     return new_path
 
-    def heuristic(self):
+    def heuristic1(self):
         total = 0
         for right in self.problem.cube['R']:
             for r in right:
-                if r != 'red   ':
+                if r[0] != 'R':
                     total += 1
         for left in self.problem.cube['L']:
             for l in left:
-                if l != 'orange':
+                if l[0] != 'L':
                     total += 1
         for front in self.problem.cube['F']:
             for f in front:
-                if f != 'blue  ':
+                if f[0] != 'F':
                     total += 1
         for back in self.problem.cube['B']:
             for b in back:
-                if b != 'green ':
+                if b[0] != 'G':
                     total += 1
         for up in self.problem.cube['U']:
             for u in up:
-                if u != 'yellow':
+                if u[0] != 'U':
                     total += 1
         for down in self.problem.cube['D']:
             for d in down:
-                if d != 'white ':
+                if d[0] != 'D':
                     total += 1
         return total
 
     def heuristic2(self):
         total = 0
-        self.problem.
-        for front in self.problem.cube['F']:
-            for f in front:
-                if f == 'blue  ':
-                    total = 0
-            print()
+
+        ul = 1
+        ur = 0
+        dl = 0
+        dr = self.problem.n * self.problem.n
+        count = 0
+        for i in range(self.problem.n):
+            for j in range(self.problem.n):
+                count += 1
+                if i == 0 and j == self.problem.n - 1:
+                    ur = count
+                elif i == self.problem.n - 1 and j == 0:
+                    dl = count
+
+        target = self.problem.cube['F'][0][0]
+        if target == f'F{ul}':
+            total += 0
+        elif target in [f'F{ur}', f'F{dl}', f'F{dr}', f'U{ul}', f'L{ul}', f'D{ul}', f'R{ul}', f'B{ul}', f'B{dr}']:
+            total += 1
+        else:
+            total += 2
+
+        target = self.problem.cube['B'][0][0]
+        if target == f'B{ul}':
+            total += 0
+        elif target in [f'B{ur}', f'B{dl}', f'B{dr}', f'U{ul}', f'L{dr}', f'D{ul}', f'R{dr}', f'F{ul}', f'F{dr}']:
+            total += 1
+        else:
+            total += 2
+
+        target = self.problem.cube['R'][0][0]
+        if target == f'R{ul}':
+            total += 0
+        elif target in [f'R{ur}', f'R{dl}', f'R{dr}', f'U{dl}', f'D{ur}', f'B{dr}', f'F{ul}', f'L{ul}', f'L{dr}']:
+            total += 1
+        else:
+            total += 2
+
+        target = self.problem.cube['L'][0][0]
+        if target == f'L{ul}':
+            total += 0
+        elif target in [f'L{ur}', f'L{dl}', f'L{dr}', f'U{ur}', f'D{dl}', f'B{dr}', f'F{ul}', f'R{ul}', f'R{dr}']:
+            total += 1
+        else:
+            total += 2
+
+        target = self.problem.cube['U'][0][0]
+        if target == f'U{ul}':
+            total += 0
+        elif target in [f'U{ur}', f'U{dl}', f'U{dr}', f'F{ul}', f'B{ul}', f'L{dl}', f'R{ur}', f'D{ul}', f'D{dr}']:
+            total += 1
+        else:
+            total += 2
+
+        target = self.problem.cube['D'][0][0]
+        if target == f'D{ul}':
+            total += 0
+        elif target in [f'D{ur}', f'D{dl}', f'D{dr}', f'U{ul}', f'B{ul}', f'L{ur}', f'R{dl}', f'F{ul}', f'F{dr}']:
+            total += 1
+        else:
+            total += 2
         return total
 
     def ASTAR(self):
@@ -145,6 +201,8 @@ class Solver:
 
                 if neighbour not in cost_so_far or new_cost < cost_so_far[new_path]:
                     cost_so_far[new_path] = new_cost
-                    priority = new_cost + self.heuristic2()
+                    if self.heuristic == 0:
+                        priority = new_cost + self.heuristic1()
+                    else:
+                        priority = new_cost + self.heuristic2()
                     queue.put((priority, new_path))
-
