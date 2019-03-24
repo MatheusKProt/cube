@@ -3,21 +3,6 @@ import time
 from queue import PriorityQueue
 
 
-class Node:
-    """A node class for A* Pathfinding"""
-
-    def __init__(self, parent=None, position=None):
-        self.parent = parent
-        self.position = position
-
-        self.g = 0
-        self.h = 0
-        self.f = 0
-
-    def __eq__(self, other):
-        return self.position == other.position
-
-
 class Solver:
     def __init__(self, problem, algorithm='BFS'):
         self.num_visited = 0
@@ -25,7 +10,7 @@ class Solver:
         self.problem = problem
 
     def solve(self):
-        result = Node
+        result = None
         start = time.time()
         print(f'Algorithm: {self.algorithm}')
         print(f'Start: {time.strftime("%H:%M:%S %d/%m/%Y", time.localtime())}')
@@ -38,13 +23,17 @@ class Solver:
         elif self.algorithm == 'A*':
             result = self.ASTAR()
         end = time.time()
+        print(f'\rNodes visited: {self.num_visited}')
         print(f'Total time: {end - start} seconds')
-        print(f'Nodes visited: {self.num_visited}')
         self.problem.print_sequence(result)
+
+    def print_nodes(self):
+        print(f'\rNodes visited: {self.num_visited}', end='')
 
     def BFS(self):
         queue = ['']
         while queue:
+            self.print_nodes()
             self.num_visited += 1
             path = queue.pop(0)
 
@@ -64,6 +53,7 @@ class Solver:
                 return None
 
     def DFS(self, route, depth):
+        self.print_nodes()
         self.num_visited += 1
 
         if depth == 0:
@@ -87,6 +77,7 @@ class Solver:
         queue.put((0, ''))
 
         while queue:
+            self.print_nodes()
             self.num_visited += 1
             cost, path = queue.get()
 
@@ -125,12 +116,23 @@ class Solver:
                     total += 1
         return total
 
+    def heuristic2(self):
+        total = 0
+        self.problem.
+        for front in self.problem.cube['F']:
+            for f in front:
+                if f == 'blue  ':
+                    total = 0
+            print()
+        return total
+
     def ASTAR(self):
         queue = PriorityQueue()
         queue.put((0, ''))
         cost_so_far = {'': 0}
 
         while queue:
+            self.print_nodes()
             self.num_visited += 1
             cost, path = queue.get()
 
@@ -143,6 +145,6 @@ class Solver:
 
                 if neighbour not in cost_so_far or new_cost < cost_so_far[new_path]:
                     cost_so_far[new_path] = new_cost
-                    priority = new_cost + self.heuristic()
+                    priority = new_cost + self.heuristic2()
                     queue.put((priority, new_path))
 
