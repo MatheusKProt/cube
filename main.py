@@ -1,5 +1,4 @@
 import os
-import sys
 import time
 
 from cube import Cube
