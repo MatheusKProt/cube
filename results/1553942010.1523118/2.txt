@@ -118,3 +118,8 @@ sequence:1-F-2,1-L-2,1-U-1,1-D-3,1-U-2
 time:22.720661878585815
 nodes:46769
 
+algorithm:BFS
+sequence:1-F-2,1-L-2,1-U-1,1-D-3,1-U-2
+time:43.57238173484802
+nodes:2454
+

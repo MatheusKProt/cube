@@ -98,3 +98,28 @@ sequence:1-R-1,3-R-3,1-L-2,3-R-2
 time:5.597830057144165
 nodes:168
 
+algorithm:A* 0
+sequence:Time out
+time:Time out
+nodes:Time out
+
+algorithm:A* 1
+sequence:Time out
+time:Time out
+nodes:Time out
+
+algorithm:UCS
+sequence:Time out
+time:Time out
+nodes:Time out
+
+algorithm:IDFS
+sequence:Time out
+time:Time out
+nodes:Time out
+
+algorithm:BFS
+sequence:Time out
+time:Time out
+nodes:Time out
+
