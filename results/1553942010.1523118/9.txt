@@ -73,3 +73,28 @@ sequence:Time out
 time:Time out
 nodes:Time out
 
+algorithm:A* 0
+sequence:4-B-2,2-L-3,2-D-3,1-D-1
+time:75.76503372192383
+nodes:1383
+
+algorithm:A* 1
+sequence:4-B-2,2-L-3,2-D-3,1-D-1
+time:16.00961685180664
+nodes:233
+
+algorithm:UCS
+sequence:Time out
+time:Time out
+nodes:Time out
+
+algorithm:IDFS
+sequence:Time out
+time:Time out
+nodes:Time out
+
+algorithm:BFS
+sequence:Time out
+time:Time out
+nodes:Time out
+

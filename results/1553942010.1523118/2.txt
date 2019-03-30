@@ -73,3 +73,48 @@ sequence:1-U-1,1-B-2,1-D-2
 time:1.6546809673309326
 nodes:216
 
+algorithm:A* 0
+sequence:1-U-3,1-B-3,1-R-2,1-F-3
+time:3.134136199951172
+nodes:291
+
+algorithm:A* 1
+sequence:1-U-3,1-B-3,1-R-2,1-F-3
+time:1.3805418014526367
+nodes:157
+
+algorithm:UCS
+sequence:1-U-3,1-B-3,1-R-2,1-F-3
+time:7.122812032699585
+nodes:638
+
+algorithm:IDFS
+sequence:1-U-3,1-B-3,1-R-2,1-F-3
+time:41.635913372039795
+nodes:81277
+
+algorithm:BFS
+sequence:1-U-3,1-B-3,1-R-2,1-F-3
+time:96.10213446617126
+nodes:4265
+
+algorithm:A* 0
+sequence:1-F-2,1-L-2,1-U-1,1-D-3,1-U-2
+time:1.8809664249420166
+nodes:262
+
+algorithm:A* 1
+sequence:1-F-2,1-L-2,1-U-1,1-D-3,1-U-2
+time:0.6574287414550781
+nodes:88
+
+algorithm:UCS
+sequence:1-F-2,1-L-2,1-U-1,1-D-3,1-U-2
+time:14.66191554069519
+nodes:1596
+
+algorithm:IDFS
+sequence:1-F-2,1-L-2,1-U-1,1-D-3,1-U-2
+time:22.720661878585815
+nodes:46769
+

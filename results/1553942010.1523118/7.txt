@@ -73,3 +73,28 @@ sequence:2-F-3,2-R-2,3-R-2
 time:66.92094373703003
 nodes:1119
 
+algorithm:A* 0
+sequence:1-R-1,3-R-3,1-L-2,3-R-2
+time:1.3649802207946777
+nodes:56
+
+algorithm:A* 1
+sequence:1-R-1,3-R-3,1-L-2,3-R-2
+time:0.06246066093444824
+nodes:3
+
+algorithm:UCS
+sequence:1-R-1,3-R-3,1-L-2,3-R-2
+time:19.83535671234131
+nodes:610
+
+algorithm:IDFS
+sequence:1-R-1,3-R-3,1-L-2,3-R-2
+time:4.64156174659729
+nodes:9231
+
+algorithm:BFS
+sequence:1-R-1,3-R-3,1-L-2,3-R-2
+time:5.597830057144165
+nodes:168
+

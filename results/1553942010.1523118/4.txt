@@ -73,3 +73,28 @@ sequence:1-B-3,1-D-3,1-B-2
 time:14.111926555633545
 nodes:623
 
+algorithm:A* 0
+sequence:2-B-2,2-R-3,1-D-1,2-B-1
+time:22.64283299446106
+nodes:1237
+
+algorithm:A* 1
+sequence:Time out
+time:Time out
+nodes:Time out
+
+algorithm:UCS
+sequence:Time out
+time:Time out
+nodes:Time out
+
+algorithm:IDFS
+sequence:Time out
+time:Time out
+nodes:Time out
+
+algorithm:BFS
+sequence:Time out
+time:Time out
+nodes:Time out
+
