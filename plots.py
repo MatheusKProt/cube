@@ -1,86 +1,107 @@
 import matplotlib.pyplot as plt
 
+import read_file
 
-def plot_time(subplot, dados, title):
-    plt.subplot(subplot)
-    plt.plot(range(1, len(dados) + 1), dados)
-    plt.title(title)
-    plt.grid(True)
-    plt.ylabel('Seconds')
+figsize = (9.6, 6)
+time_out = 300
+time_out_lim = (4 * time_out) / 100
+
+
+def _plot_time(data, algorithms, i):
+    x = []
+    y = []
+    count = 1
+    for d in data[algorithms[i]]['time']:
+        if d != -1:
+            x.append(count)
+            y.append(d)
+        count += 1
+    plt.plot(x + [99999], y + [time_out / 2], 'o-')
+
+
+def plot_time(data, algorithms, n):
+    plt.figure(figsize=figsize)
+    plt.title(f'Cube: {n}x{n}x{n}')
+    plt.xlim(0.8, 5.2)
+    plt.ylim(-time_out_lim, time_out + time_out_lim)
+    for i in range(0, 5):
+        _plot_time(data, algorithms, i)
+
+    plt.legend(algorithms)
+    plt.grid()
     plt.xlabel('Depth')
-    plt.axis([0.5, 7.5, -100, 2500])
+    plt.ylabel('Time (seconds)')
+    plt.xticks([1, 2, 3, 4, 5])
+    plt.show()
 
 
-def plot_nodos(subplot, dados, title):
-    plt.subplot(subplot)
-    plt.plot(range(1, len(dados) + 1), dados)
-    plt.title(title)
-    plt.grid(True)
-    plt.ylabel('Nodes')
+def _plot_solutions(data, algorithms, i):
+    plt.title(algorithms[i])
     plt.xlabel('Depth')
-    plt.axis([0.5, 7.5, -100, 2050000])
+    plt.ylabel('Found')
+    plt.yticks([0, 1])
+    y = []
+    [y.append(1) if j in data[algorithms[i]]['depth'] else y.append(0) for j in range(1, 6)]
+    plt.bar([1, 2, 3, 4, 5], y, tick_label=[1, 2, 3, 4, 5])
+
+
+def plot_solutions(data, algorithms, n):
+    plt.figure(figsize=figsize)
+    plt.suptitle(f'Solutions found\nTime limit: {time_out} seconds\nCube: {n}x{n}x{n}')
+
+    plt.subplot(231)
+    _plot_solutions(data, algorithms, 0)
+
+    plt.subplot(233)
+    _plot_solutions(data, algorithms, 1)
+
+    plt.subplot(234)
+    _plot_solutions(data, algorithms, 2)
+
+    plt.subplot(235)
+    _plot_solutions(data, algorithms, 3)
+
+    plt.subplot(236)
+    _plot_solutions(data, algorithms, 4)
+
+    plt.show()
+
+
+def _plot_depth_all(data, algorithms, i, j):
+    x = []
+    y = []
+    count = 2
+    for k in range(0, 9):
+        d = data[k][algorithms[i]]['time'][j:j + 1][0]
+        if d != -1:
+            x.append(count)
+            y.append(d)
+        count += 1
+    plt.plot(x + [99999], y + [time_out / 2], 'o-')
+
+
+def plot_depth_all(data, algorithms):
+    for j in range(len(data[0][algorithms[0]]['time'])):
+        plt.figure(figsize=figsize)
+        plt.title(f'')
+        plt.xlim(1.68, 10.32)
+        plt.ylim(-time_out_lim, time_out + time_out_lim)
+        for i in range(5):
+            _plot_depth_all(data, algorithms, i, j)
+        plt.legend(algorithms)
+        plt.grid()
+        plt.xlabel('Depth')
+        plt.ylabel('Time (seconds)')
+        plt.show()
 
 
 if __name__ == '__main__':
-    title = 'L F D R B U L'
-
-    a_0_time = [0, 0, 0.12493324279785156, 2.7745113372802734, 7.649450063705444, 204.15198278427124, 2412.2397713661194]
-    a_0_nodos = [1, 2, 20, 283, 743, 16363, 163085]
-
-    a_1_time = [0, 0, 0.1718580722808838, 28.037848711013794, 290.6446952819824]
-    a_1_nodos = [1, 2, 25, 1782, 14867]
-
-    ucs_time = [0, 0.062465667724609375, 1.0660386085510254, 54.78349542617798, 372.39924597740173]
-    ucs_nodos = [1, 10, 118, 4978, 22474]
-
-    idfs_time = [0, 0.09372997283935547, 2.211777448654175, 13.14039158821106, 1576.95729804039]
-    idfs_nodos = [8, 294, 4411, 22937, 2023656]
-
-    bfs_time = [0, 0.09372663497924805, 2.133387327194214, 17.15380048751831]
-    bfs_nodos = [1, 16, 232, 1204]
-
-    plot_time(121, bfs_time, 'BFS Time')
-    plot_nodos(122, bfs_nodos, 'BFS Nodes')
-    plt.suptitle(title)
-    plt.show()
-
-    plot_time(121, idfs_time, 'IDFS Time')
-    plot_nodos(122, idfs_nodos, 'IDFS Nodes')
-    plt.suptitle(title)
-    plt.show()
-
-    plot_time(121, ucs_time, 'UCS Time')
-    plot_nodos(122, ucs_nodos, 'UCS Nodes')
-    plt.suptitle(title)
-    plt.show()
-
-    plot_time(121, a_0_time, 'A* 0 Time')
-    plot_nodos(122, a_0_nodos, 'A* 0 Nodes')
-    plt.suptitle(title)
-    plt.show()
-
-    plot_time(121, a_1_time, 'A* 1 Time')
-    plot_nodos(122, a_1_nodos, 'A* 1 Nodes')
-    plt.suptitle(title)
-    plt.show()
-
-    plt.plot(bfs_time)
-    plt.plot(idfs_time)
-    plt.plot(ucs_time)
-    plt.plot(a_0_time)
-    plt.plot(a_1_time)
-    plt.title('Times 3x3x3')
-    plt.legend(['BFS', 'IDFS', 'UCS', 'A* 0', 'A* 1'])
-    plt.grid()
-    plt.show()
-
-    plt.plot(bfs_nodos)
-    plt.plot(idfs_nodos)
-    plt.plot(ucs_nodos)
-    plt.plot(a_0_nodos)
-    plt.plot(a_1_nodos)
-    plt.title('Nodes 3x3x3')
-    plt.legend(['BFS', 'IDFS', 'UCS', 'A* 0', 'A* 1'])
-    plt.grid()
-    plt.show()
+    datas = []
+    algorithms = ['BFS', 'IDFS', 'UCS', 'A* 0', 'A* 1']
+    for i in range(2, 11):
+        datas.append(read_file.main(i))
+        data = read_file.main(i)
+        plot_time(data, algorithms, i)
+        plot_solutions(data, algorithms, i)
+    plot_depth_all(datas, algorithms)
 
