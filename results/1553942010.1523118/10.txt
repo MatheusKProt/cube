@@ -53,3 +53,23 @@ sequence:2-U-2,4-F-1,4-U-2
 time:5.125226974487305
 nodes:94
 
+algorithm:A* 1
+sequence:2-U-2,4-F-1,4-U-2
+time:299.71539402008057
+nodes:3865
+
+algorithm:UCS
+sequence:Time out
+time:Time out
+nodes:Time out
+
+algorithm:IDFS
+sequence:Time out
+time:Time out
+nodes:Time out
+
+algorithm:BFS
+sequence:Time out
+time:Time out
+nodes:Time out
+
