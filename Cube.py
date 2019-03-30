@@ -4,33 +4,7 @@ import numpy as np
 
 class Cube:
 
-    # 2x2
-    # R = [[' 0', ' 1'], [' 2', ' 3']]
-    # L = [[' 4', ' 5'], [' 6', ' 7']]
-    # U = [[' 8', ' 9'], ['10', '11']]
-    # D = [['12', '13'], ['14', '15']]
-    # F = [['16', '17'], ['18', '19']]
-    # B = [['20', '21'], ['22', '23']]
-
-    # 3x3
-    # U = [[' 0', ' 1', ' 2'], [' 3', ' 4', ' 5'], [' 6', ' 7', ' 8']]
-    # L = [[' 9', '10', '11'], ['12', '13', '14'], ['15', '16', '17']]
-    # F = [['18', '19', '20'], ['21', '22', '23'], ['24', '25', '26']]
-    # R = [['27', '28', '29'], ['30', '31', '32'], ['33', '34', '35']]
-    # D = [['36', '37', '38'], ['39', '40', '41'], ['42', '43', '44']]
-    # B = [['45', '46', '47'], ['48', '49', '50'], ['51', '52', '53']]
-
     def __init__(self, n: int, num_moves=1, sequence=None):
-        """
-        Front => Blue
-        Down => White
-        Right => Red
-        Left => Orange
-        Up => Yellow
-        Back => Green
-
-        n: n*n*n
-        """
         self.R = []
         self.L = []
         self.U = []
@@ -130,10 +104,6 @@ class Cube:
             suc.append(f'{i}-B-3')
 
         return suc
-        # if scramble:
-        #     return suc
-        # else:
-        #     return random.sample(suc, len(suc))
 
     def scramble(self, cube, num_moves, sequence=None):
         if sequence:
@@ -168,9 +138,6 @@ class Cube:
                 suc.pop(x)
 
     def move_(self, moves: list, row):
-        """
-        moves: [[Face que vai ser pego, Rotacao do que vai ser pego(-1, 0, 1, 2)],[Face que recebe, Rotacao para receber]]
-        """
         cube = self.cube.copy()
         for m in moves:
             y = np.rot90(np.array(self.cube[m[1][0]]), m[1][1])

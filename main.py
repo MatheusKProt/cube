@@ -2,18 +2,15 @@ from cube import Cube
 from solver import Solver
 
 if __name__ == '__main__':
-    # cube = Cube(3, sequence='1-R-1,1-F-1,1-L-1,1-B-1,1-U-1,1-D-1,1-R-1')
-    # cube = Cube(3, sequence='1-R-1,1-F-1,1-L-1,1-B-1,1-U-1,1-D-1')
-    # cube = Cube(3, sequence='1-R-1,1-F-1,1-L-1,1-B-1,1-U-1')
-    # cube = Cube(3, sequence='1-R-1,1-F-1,1-L-1,1-B-1')
-    # cube = Cube(3, sequence='1-R-3,1-F-3,1-D-1,1-U-2')
-    # cube = Cube(3, sequence='1-R-1,1-F-1,1-L-1')
-    # cube = Cube(3, sequence='1-R-1,1-F-1')
-    # cube = Cube(3, sequence='1-R-1')
-    cube = Cube(4, 4)
-    cube.print_sequence()
-    Solver(cube, 'A*', 1).solve()
-    Solver(cube, 'A*', 0).solve()
-    # Solver(cube, 'UCS').solve()
-    # Solver(cube, 'IDFS').solve()
-    # Solver(cube, 'BFS').solve()
+    d = 5
+    n = 10
+    time_out = 60
+    for i in range(1, d + 1):
+        for j in range(2, n + 1):
+            cube = Cube(j, i)
+
+            Solver(cube, 'A* 0', time_out).solve()
+            Solver(cube, 'A* 1', time_out).solve()
+            Solver(cube, 'UCS', time_out).solve()
+            Solver(cube, 'IDFS', time_out).solve()
+            Solver(cube, 'BFS', time_out).solve()

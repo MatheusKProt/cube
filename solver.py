@@ -3,16 +3,27 @@ import time
 from queue import PriorityQueue
 
 
+def save(algorithm, total_time, nodes, n, sequence):
+    file = open(f'results/{n}.txt', 'a')
+    file.write(f'algorithm:{algorithm}\n')
+    file.write(f'sequence:{sequence[:-1]}\n')
+    file.write(f'time:{total_time}\n')
+    file.write(f'nodes:{nodes}\n\n')
+
+    file.close()
+
+
 class Solver:
-    def __init__(self, problem, algorithm='BFS', heuristic=0):
+    def __init__(self, problem, algorithm='BFS', time_limit=float('inf')):
         self.num_visited = 0
         self.algorithm = algorithm
         self.problem = problem
-        self.heuristic = heuristic
+        self.time_limit = time_limit
+        self.start = 0
 
     def solve(self):
         result = None
-        start = time.time()
+        self.start = time.time()
         print(f'Algorithm: {self.algorithm}')
         print(f'Start: {time.strftime("%H:%M:%S %d/%m/%Y", time.localtime())}')
         if self.algorithm == 'BFS':
@@ -21,11 +32,17 @@ class Solver:
             result = self.IDFS()
         elif self.algorithm == 'UCS':
             result = self.UCS()
-        elif self.algorithm == 'A*':
-            result = self.ASTAR()
+        elif self.algorithm == 'A* 0':
+            result = self.ASTAR(0)
+        elif self.algorithm == 'A* 1':
+            result = self.ASTAR(1)
         end = time.time()
         print(f'\rNodes visited: {self.num_visited}')
-        print(f'Total time: {end - start} seconds')
+        print(f'Total time: {end - self.start} seconds')
+        if result == 'TimeOut':
+            save(self.algorithm, 'Time out', 'Time out', self.problem.n, 'Time out,')
+        else:
+            save(self.algorithm, end - self.start, self.num_visited, self.problem.n, self.problem.sequence)
         self.problem.print_sequence(result)
 
     def print_nodes(self):
@@ -34,6 +51,8 @@ class Solver:
     def BFS(self):
         queue = ['']
         while queue:
+            if (time.time() - self.start) > self.time_limit:
+                return 'TimeOut'
             self.print_nodes()
             self.num_visited += 1
             path = queue.pop(0)
@@ -54,6 +73,8 @@ class Solver:
                 return None
 
     def DFS(self, route, depth):
+        if (time.time() - self.start) > self.time_limit:
+            return 'TimeOut', True
         self.print_nodes()
         self.num_visited += 1
 
@@ -78,6 +99,8 @@ class Solver:
         queue.put((0, ''))
 
         while queue:
+            if (time.time() - self.start) > self.time_limit:
+                return 'TimeOut'
             self.print_nodes()
             self.num_visited += 1
             cost, path = queue.get()
@@ -182,12 +205,14 @@ class Solver:
             total += 2
         return total
 
-    def ASTAR(self):
+    def ASTAR(self, heuristic):
         queue = PriorityQueue()
         queue.put((0, ''))
         cost_so_far = {'': 0}
 
         while queue:
+            if (time.time() - self.start) > self.time_limit:
+                return 'TimeOut'
             self.print_nodes()
             self.num_visited += 1
             cost, path = queue.get()
@@ -201,7 +226,7 @@ class Solver:
 
                 if neighbour not in cost_so_far or new_cost < cost_so_far[new_path]:
                     cost_so_far[new_path] = new_cost
-                    if self.heuristic == 0:
+                    if heuristic == 0:
                         priority = new_cost + self.heuristic1()
                     else:
                         priority = new_cost + self.heuristic2()

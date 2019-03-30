@@ -1,0 +1,125 @@
+algorithm:A* 0
+sequence:1-L-2
+time:0.001972675323486328
+nodes:1
+
+algorithm:A* 1
+sequence:1-L-2
+time:0.0019953250885009766
+nodes:1
+
+algorithm:UCS
+sequence:1-L-2
+time:0.0009980201721191406
+nodes:1
+
+algorithm:IDFS
+sequence:1-L-2
+time:0.0019965171813964844
+nodes:7
+
+algorithm:BFS
+sequence:1-L-2
+time:0.0009722709655761719
+nodes:1
+
+algorithm:A* 0
+sequence:1-L-2,1-U-2
+time:0.00498652458190918
+nodes:2
+
+algorithm:A* 1
+sequence:1-L-2,1-U-2
+time:0.023927927017211914
+nodes:5
+
+algorithm:UCS
+sequence:1-L-2,1-U-2
+time:0.10372090339660645
+nodes:18
+
+algorithm:IDFS
+sequence:1-L-2,1-U-2
+time:0.042908668518066406
+nodes:160
+
+algorithm:BFS
+sequence:1-L-2,1-U-2
+time:0.04786872863769531
+nodes:9
+
+algorithm:A* 0
+sequence:1-F-2,1-L-3,1-D-2
+time:0.12422657012939453
+nodes:21
+
+algorithm:A* 1
+sequence:1-F-2,1-L-3,1-D-2
+time:0.29518580436706543
+nodes:38
+
+algorithm:UCS
+sequence:1-F-2,1-L-3,1-D-2
+time:0.7989704608917236
+nodes:101
+
+algorithm:IDFS
+sequence:1-F-2,1-L-3,1-D-2
+time:1.6086788177490234
+nodes:3867
+
+algorithm:BFS
+sequence:1-F-2,1-L-3,1-D-2
+time:1.733987808227539
+nodes:203
+
+algorithm:A* 0
+sequence:1-R-1,1-B-3,1-U-3,1-B-2
+time:2.797518253326416
+nodes:336
+
+algorithm:A* 1
+sequence:1-R-1,1-B-3,1-U-3,1-B-2
+time:0.5575079917907715
+nodes:73
+
+algorithm:UCS
+sequence:1-R-1,1-B-3,1-U-3,1-B-2
+time:9.150524854660034
+nodes:938
+
+algorithm:IDFS
+sequence:1-R-1,1-B-3,1-U-3,1-B-2
+time:58.32201409339905
+nodes:107688
+
+algorithm:BFS
+sequence:Time out
+time:Time out
+nodes:Time out
+
+algorithm:A* 0
+sequence:1-R-2,1-F-3,1-D-2,1-U-2,1-R-2
+time:2.629993200302124
+nodes:300
+
+algorithm:A* 1
+sequence:1-R-2,1-F-3,1-D-2,1-U-2,1-R-2
+time:1.2686293125152588
+nodes:130
+
+algorithm:UCS
+sequence:1-R-2,1-F-3,1-D-2,1-U-2,1-R-2
+time:41.27660894393921
+nodes:3610
+
+algorithm:IDFS
+sequence:1-R-2,1-F-3,1-D-2,1-U-2,1-R-2
+time:10.201724290847778
+nodes:17504
+
+algorithm:BFS
+sequence:1-R-2,1-F-3,1-D-2,1-U-2,1-R-2
+time:12.641196727752686
+nodes:919
+
