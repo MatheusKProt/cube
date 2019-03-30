@@ -1,0 +1,75 @@
+algorithm:A* 0
+sequence:4-D-1
+time:0.015636444091796875
+nodes:1
+
+algorithm:A* 1
+sequence:4-D-1
+time:0.015647172927856445
+nodes:1
+
+algorithm:UCS
+sequence:4-D-1
+time:0.015598058700561523
+nodes:1
+
+algorithm:IDFS
+sequence:4-D-1
+time:0.031266212463378906
+nodes:68
+
+algorithm:BFS
+sequence:4-D-1
+time:0.015598058700561523
+nodes:1
+
+algorithm:A* 0
+sequence:1-F-2,3-U-3
+time:0.041631221771240234
+nodes:3
+
+algorithm:A* 1
+sequence:Time out
+time:Time out
+nodes:Time out
+
+algorithm:UCS
+sequence:1-F-2,3-U-3
+time:1.7370843887329102
+nodes:53
+
+algorithm:IDFS
+sequence:1-F-2,3-U-3
+time:1.2805721759796143
+nodes:3156
+
+algorithm:BFS
+sequence:1-F-2,3-U-3
+time:1.428563117980957
+nodes:44
+
+algorithm:A* 0
+sequence:2-B-1,3-U-1,3-D-3
+time:2.5875208377838135
+nodes:78
+
+algorithm:A* 1
+sequence:2-B-1,3-U-1,3-D-3
+time:57.138688802719116
+nodes:1228
+
+algorithm:UCS
+sequence:2-B-1,3-U-1,3-D-3
+time:136.25760674476624
+nodes:2935
+
+algorithm:IDFS
+sequence:2-B-1,3-U-1,3-D-3
+time:142.1216380596161
+nodes:239963
+
+algorithm:BFS
+sequence:Time out
+time:Time out
+nodes:Time out
+

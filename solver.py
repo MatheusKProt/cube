@@ -3,8 +3,8 @@ import time
 from queue import PriorityQueue
 
 
-def save(algorithm, total_time, nodes, n, sequence):
-    file = open(f'results/{n}.txt', 'a')
+def save(algorithm, total_time, nodes, n, sequence, start_time):
+    file = open(f'results/{start_time}/{n}.txt', 'a')
     file.write(f'algorithm:{algorithm}\n')
     file.write(f'sequence:{sequence[:-1]}\n')
     file.write(f'time:{total_time}\n')
@@ -14,11 +14,12 @@ def save(algorithm, total_time, nodes, n, sequence):
 
 
 class Solver:
-    def __init__(self, problem, algorithm='BFS', time_limit=float('inf')):
+    def __init__(self, problem, algorithm='BFS', time_limit=float('inf'), start_time=0):
         self.num_visited = 0
         self.algorithm = algorithm
         self.problem = problem
         self.time_limit = time_limit
+        self.start_time = start_time
         self.start = 0
 
     def solve(self):
@@ -40,9 +41,9 @@ class Solver:
         print(f'\rNodes visited: {self.num_visited}')
         print(f'Total time: {end - self.start} seconds')
         if result == 'TimeOut':
-            save(self.algorithm, 'Time out', 'Time out', self.problem.n, 'Time out,')
+            save(self.algorithm, 'Time out', 'Time out', self.problem.n, 'Time out,', self.start_time)
         else:
-            save(self.algorithm, end - self.start, self.num_visited, self.problem.n, self.problem.sequence)
+            save(self.algorithm, end - self.start, self.num_visited, self.problem.n, self.problem.sequence, self.start_time)
         self.problem.print_sequence(result)
 
     def print_nodes(self):
