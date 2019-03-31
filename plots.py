@@ -67,7 +67,7 @@ def plot_solutions(data, algorithms, n):
     plt.show()
 
 
-def _plot_depth_all(data, algorithms, i, j):
+def _plot_n(data, algorithms, i, j):
     x = []
     y = []
     count = 2
@@ -80,17 +80,17 @@ def _plot_depth_all(data, algorithms, i, j):
     plt.plot(x + [99999], y + [time_out / 2], 'o-')
 
 
-def plot_depth_all(data, algorithms):
+def plot_n(data, algorithms):
     for j in range(len(data[0][algorithms[0]]['time'])):
         plt.figure(figsize=figsize)
-        plt.title(f'')
+        plt.title(f'Depth: {j + 1}')
         plt.xlim(1.68, 10.32)
         plt.ylim(-time_out_lim, time_out + time_out_lim)
         for i in range(5):
-            _plot_depth_all(data, algorithms, i, j)
+            _plot_n(data, algorithms, i, j)
         plt.legend(algorithms)
         plt.grid()
-        plt.xlabel('Depth')
+        plt.xlabel('N')
         plt.ylabel('Time (seconds)')
         plt.show()
 
@@ -103,5 +103,5 @@ if __name__ == '__main__':
         data = read_file.main(i)
         plot_time(data, algorithms, i)
         plot_solutions(data, algorithms, i)
-    plot_depth_all(datas, algorithms)
+    plot_n(datas, algorithms)
 
