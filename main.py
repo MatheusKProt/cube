@@ -6,7 +6,7 @@ from solver import Solver
 
 if __name__ == '__main__':
     d = 5
-    n = 10
+    n = 2
     time_out = 300
     start_time = time.time()
     dirName = f'results/{start_time}'

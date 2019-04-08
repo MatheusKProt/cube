@@ -1,0 +1,35 @@
+algorithm:A* 0
+sequence:2-U-2
+time:0.006995677947998047
+nodes:1
+
+memory:1
+
+algorithm:A* 1
+sequence:2-U-2
+time:0.007995128631591797
+nodes:1
+
+memory:1
+
+algorithm:UCS
+sequence:2-U-2
+time:0.006995677947998047
+nodes:1
+
+memory:1
+
+algorithm:IDFS
+sequence:2-U-2
+time:0.0069963932037353516
+nodes:28
+
+memory:2
+
+algorithm:BFS
+sequence:2-U-2
+time:0.006995201110839844
+nodes:1
+
+memory:1
+
