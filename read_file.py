@@ -1,28 +1,31 @@
-def main(n):
-    file = open(f'results/1553942010.1523118/{n}.txt', 'r')
-    dados = {}
-    algorithm = ''
+from ast import literal_eval
+
+
+def main(n, path):
+    file = open(f'results/{path}/{n}.txt', 'r')
+    dados = []
+    saida = {
+        'BFS': {'sequence': [], 'time': [], 'nodes': [], 'memory': [], 'depth': []},
+        'IDFS': {'sequence': [], 'time': [], 'nodes': [], 'memory': [], 'depth': []},
+        'UCS': {'sequence': [], 'time': [], 'nodes': [], 'memory': [], 'depth': []},
+        'A* 0': {'sequence': [], 'time': [], 'nodes': [], 'memory': [], 'depth': []},
+        'A* 1': {'sequence': [], 'time': [], 'nodes': [], 'memory': [], 'depth': []},
+    }
+
+    my_own_order = ['BFS', 'IDFS', 'UCS', 'A* 0', 'A* 1']
+    order = {key: i for i, key in enumerate(my_own_order)}
+
     for r in file.read().split('\n'):
-        if 'algorithm:' in r:
-            algorithm = r.split('algorithm:')[1]
-            if algorithm not in str(dados):
-                dados[algorithm] = {'time': [], 'nodes': [], 'depth': []}
-        if 'time' in r:
-            time = r.split('time:')[1]
-            if time != 'Time out':
-                dados[algorithm]['time'].append(float(time))
-            else:
-                dados[algorithm]['time'].append(-1)
-        if 'nodes' in r:
-            nodes = r.split('nodes:')[1]
-            if nodes != 'Time out':
-                dados[algorithm]['nodes'].append(float(nodes))
-            else:
-                dados[algorithm]['nodes'].append(-1)
-        if 'sequence:' in r:
-            sequence = r.split('sequence:')[1]
-            if sequence != 'Time out':
-                dados[algorithm]['depth'].append(len(str(sequence).split(',')))
-            else:
-                dados[algorithm]['depth'].append(-1)
-    return dados
+        if r:
+            dados.append(literal_eval(r))
+
+    dados = sorted(dados, key=lambda x: (order[x['algorithm']], x['algorithm'], x['depth']))
+
+    for dado in dados:
+        saida[dado['algorithm']]['sequence'].append(dado['sequence'])
+        saida[dado['algorithm']]['time'].append(dado['time'])
+        saida[dado['algorithm']]['nodes'].append(dado['nodes'])
+        saida[dado['algorithm']]['memory'].append(dado['memory'])
+        if dado['sequence'] != -1:
+            saida[dado['algorithm']]['depth'].append(dado['depth'])
+    return saida

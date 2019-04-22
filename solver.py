@@ -3,13 +3,17 @@ import time
 from queue import PriorityQueue
 
 
-def save(algorithm, total_time, nodes, n, sequence, start_time, max_mem):
+def save(algorithm, total_time, nodes, n, sequence, start_time, max_mem, depth):
+    dados = {
+        'algorithm': algorithm,
+        'sequence': sequence,
+        'time': total_time,
+        'nodes': nodes,
+        'memory': max_mem,
+        'depth': depth
+    }
     file = open(f'results/{start_time}/{n}.txt', 'a')
-    file.write(f'algorithm:{algorithm}\n')
-    file.write(f'sequence:{sequence[:-1]}\n')
-    file.write(f'time:{total_time}\n')
-    file.write(f'nodes:{nodes}\n\n')
-    file.write(f'memory:{max_mem}\n\n')
+    file.write(str(dados) + "\n")
 
     file.close()
 
@@ -27,8 +31,6 @@ class Solver:
     def solve(self):
         result = None
         self.start = time.time()
-        print(f'Algorithm: {self.algorithm}')
-        print(f'Start: {time.strftime("%H:%M:%S %d/%m/%Y", time.localtime())}')
         if self.algorithm == 'BFS':
             result = self.BFS()
         elif self.algorithm == 'IDFS':
@@ -40,17 +42,14 @@ class Solver:
         elif self.algorithm == 'A* 1':
             result = self.ASTAR(1)
         end = time.time()
-        print(f'\rNodes visited: {self.num_visited}')
-        print(f'Nodes in memory: {self.max_mem}')
-        print(f'Total time: {end - self.start} seconds')
         if result == 'TimeOut':
-            save(self.algorithm, 'Time out', 'Time out', self.problem.n, 'Time out,', self.start_time, 'Time out')
+            save(self.algorithm, -1, -1, self.problem.n, -1, self.start_time, -1, str(self.problem.sequence).count(","))
         else:
-            save(self.algorithm, end - self.start, self.num_visited, self.problem.n, self.problem.sequence, self.start_time, self.max_mem)
-        self.problem.print_sequence(result)
+            save(self.algorithm, end - self.start, self.num_visited, self.problem.n, self.problem.sequence[:-1], self.start_time, self.max_mem, str(self.problem.sequence).count(","))
 
     def print_nodes(self):
-        print(f'\rNodes visited: {self.num_visited}', end='')
+        pass
+        # print(f'\rNodes visited: {self.num_visited}', end='')
 
     def BFS(self):
         queue = ['']
@@ -72,13 +71,13 @@ class Solver:
 
     def IDFS(self):
         for depth in itertools.count():
-            route, remaining = self.DFS('', depth, 0)
+            route, remaining = self.DLS('', depth, 0)
             if route:
                 return route
             elif not remaining:
                 return None
 
-    def DFS(self, route, depth, count):
+    def DLS(self, route, depth, count):
         count += 1
         if self.max_mem < count:
             self.max_mem = count
@@ -95,7 +94,7 @@ class Solver:
 
         any_remaining = False
         for move in self.problem.successors():
-            found, remaining = self.DFS(route + move + ',', depth - 1, count)
+            found, remaining = self.DLS(route + move + ',', depth - 1, count)
             if found:
                 return found, True
             if remaining:
