@@ -1,0 +1,25 @@
+{'algorithm': 'A* 0', 'sequence': '1-D-1', 'time': 0.0039980411529541016, 'nodes': 1, 'memory': 1, 'depth': 1}
+{'algorithm': 'A* 1', 'sequence': '1-D-1', 'time': 0.0039975643157958984, 'nodes': 1, 'memory': 1, 'depth': 1}
+{'algorithm': 'UCS', 'sequence': '1-D-1', 'time': 0.0039975643157958984, 'nodes': 1, 'memory': 1, 'depth': 1}
+{'algorithm': 'IDFS', 'sequence': '1-D-1', 'time': 0.0029981136322021484, 'nodes': 14, 'memory': 2, 'depth': 1}
+{'algorithm': 'BFS', 'sequence': '1-D-1', 'time': 0.0029976367950439453, 'nodes': 1, 'memory': 1, 'depth': 1}
+{'algorithm': 'A* 0', 'sequence': '1-L-2,2-L-1', 'time': 0.025984764099121094, 'nodes': 2, 'memory': 36, 'depth': 2}
+{'algorithm': 'A* 1', 'sequence': '1-L-2,2-L-1', 'time': 0.033979177474975586, 'nodes': 2, 'memory': 36, 'depth': 2}
+{'algorithm': 'IDFS', 'sequence': '1-L-2,2-L-1', 'time': 0.5136821269989014, 'nodes': 212, 'memory': 3, 'depth': 2}
+{'algorithm': 'UCS', 'sequence': '1-L-2,2-L-1', 'time': 1.0408711433410645, 'nodes': 12, 'memory': 386, 'depth': 2}
+{'algorithm': 'BFS', 'sequence': '1-L-2,2-L-1', 'time': 0.6835761070251465, 'nodes': 6, 'memory': 176, 'depth': 2}
+{'algorithm': 'A* 1', 'sequence': '2-D-2,1-F-1,1-R-3', 'time': 4.867910146713257, 'nodes': 24, 'memory': 806, 'depth': 3}
+{'algorithm': 'A* 0', 'sequence': '2-D-2,1-F-1,1-R-3', 'time': 10.76963496208191, 'nodes': 38, 'memory': 1296, 'depth': 3}
+{'algorithm': 'BFS', 'sequence': '2-D-2,1-F-1,1-R-3', 'time': 16.07490038871765, 'nodes': 52, 'memory': 1786, 'depth': 3}
+{'algorithm': 'IDFS', 'sequence': '2-D-2,1-F-1,1-R-3', 'time': 18.531049251556396, 'nodes': 1921, 'memory': 4, 'depth': 3}
+{'algorithm': 'A* 0', 'sequence': '2-L-3,1-F-2,2-R-1,2-B-2', 'time': 89.47212600708008, 'nodes': 255, 'memory': 8891, 'depth': 4}
+{'algorithm': 'UCS', 'sequence': '2-D-2,1-F-1,1-R-3', 'time': 155.34913325309753, 'nodes': 478, 'memory': 16696, 'depth': 3}
+{'algorithm': 'IDFS', 'sequence': -1, 'time': -1, 'nodes': -1, 'memory': -1, 'depth': 4}
+{'algorithm': 'A* 1', 'sequence': -1, 'time': -1, 'nodes': -1, 'memory': -1, 'depth': 4}
+{'algorithm': 'UCS', 'sequence': -1, 'time': -1, 'nodes': -1, 'memory': -1, 'depth': 4}
+{'algorithm': 'A* 0', 'sequence': -1, 'time': -1, 'nodes': -1, 'memory': -1, 'depth': 5}
+{'algorithm': 'BFS', 'sequence': -1, 'time': -1, 'nodes': -1, 'memory': -1, 'depth': 4}
+{'algorithm': 'IDFS', 'sequence': -1, 'time': -1, 'nodes': -1, 'memory': -1, 'depth': 5}
+{'algorithm': 'BFS', 'sequence': -1, 'time': -1, 'nodes': -1, 'memory': -1, 'depth': 5}
+{'algorithm': 'A* 1', 'sequence': -1, 'time': -1, 'nodes': -1, 'memory': -1, 'depth': 5}
+{'algorithm': 'UCS', 'sequence': -1, 'time': -1, 'nodes': -1, 'memory': -1, 'depth': 5}

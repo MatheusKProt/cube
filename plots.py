@@ -3,11 +3,12 @@ import matplotlib.pyplot as plt
 import read_file
 
 figsize = (9.6, 6)
-time_out = 300
-time_out_lim = (4 * time_out) / 100
-depth = [1, 10]
+depth = [1, 5]
 num = [2, 10]
-path = '1555941171.5069492'
+time_out = 5
+path = '1'
+
+time_out_lim = (4 * time_out) / 100
 
 
 def _plot_time(data, algorithms, i):
@@ -25,7 +26,7 @@ def _plot_time(data, algorithms, i):
 def plot_time(data, algorithms, n):
     plt.figure(figsize=figsize)
     plt.title(f'Cube: {n}x{n}x{n}')
-    plt.xlim(0.8, 5.2)
+    plt.xlim(0.8, depth[1] + 0.2)
     plt.ylim(-time_out_lim, time_out + time_out_lim)
     for i in range(0, 5):
         _plot_time(data, algorithms, i)
@@ -35,7 +36,8 @@ def plot_time(data, algorithms, n):
     plt.xlabel('Depth')
     plt.ylabel('Time (seconds)')
     plt.xticks(range(depth[0], depth[1] + 1))
-    plt.show()
+    plt.savefig(f'results/images/{n}.png')
+    plt.close()
 
 
 def _plot_solutions(data, algorithms, i):
@@ -67,7 +69,9 @@ def plot_solutions(data, algorithms, n):
     plt.subplot(236)
     _plot_solutions(data, algorithms, 4)
 
+    # plt.savefig(f'results/images/s{n}.png')
     plt.show()
+    plt.close()
 
 
 def _plot_n(data, algorithms, i, j):
@@ -84,19 +88,19 @@ def _plot_n(data, algorithms, i, j):
 
 
 def plot_n(data, algorithms):
-    for j in range(num[1]):
+    for j in range(depth[1]):
         plt.figure(figsize=figsize)
         plt.title(f'Depth: {j + 1}')
         plt.xlim(1.68, 10.32)
         plt.ylim(-time_out_lim, time_out + time_out_lim)
-        print(j + 1)
         for i in range(0, 5):
             _plot_n(data, algorithms, i, j)
         plt.legend(algorithms)
         plt.grid()
         plt.xlabel('N')
         plt.ylabel('Time (seconds)')
-        plt.show()
+        plt.savefig(f'results/images/n{j}.png')
+        plt.close()
 
 
 if __name__ == '__main__':
@@ -104,8 +108,8 @@ if __name__ == '__main__':
     algorithms = ['BFS', 'IDFS', 'UCS', 'A* 0', 'A* 1']
     for i in range(num[0], num[1] + 1):
         datas.append(read_file.main(i, path))
-        data = read_file.main(i, path)
-        plot_time(data, algorithms, i)
-        plot_solutions(data, algorithms, i)
+    #     data = read_file.main(i, path)
+    #     plot_time(data, algorithms, i)
+    #     plot_solutions(data, algorithms, i)
     plot_n(datas, algorithms)
 

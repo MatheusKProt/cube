@@ -14,7 +14,6 @@ def save(algorithm, total_time, nodes, n, sequence, start_time, max_mem, depth):
     }
     file = open(f'results/{start_time}/{n}.txt', 'a')
     file.write(str(dados) + "\n")
-
     file.close()
 
 
