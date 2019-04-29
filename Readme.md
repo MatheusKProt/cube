@@ -1,92 +1,27 @@
 # Cube
 
-### Resolvido
+![](results/1/images/2.png "Cube 2x2x2")
+![](results/1/images/3.png "Cube 3x3x3")
+![](results/1/images/4.png "Cube 4x4x4")
+![](results/1/images/5.png "Cube 5x5x5")
+![](results/1/images/6.png "Cube 6x6x6")
+![](results/1/images/7.png "Cube 7x7x7")
+![](results/1/images/8.png "Cube 8x8x8")
+![](results/1/images/9.png "Cube 9x9x9")
+![](results/1/images/10.png "Cube 10x10x10")
 
-```
-        [8 , 9 ]                    [U , U ]
-        [10, 11]                    [U , U ]
-[4 , 5 ][16, 17][0 , 1 ]    [L , L ][F , F ][R , R ]
-[6 , 7 ][18, 19][2 , 3 ]    [L , L ][F , F ][R , R ]
-        [12, 13]                    [D , D ]
-        [14, 15]                    [D , D ]
-        [20, 21]                    [B , B ]
-        [22, 23]                    [B , B ]
-```
+![](results/1/images/n0.png "Depth 1")
+![](results/1/images/n1.png "Depth 1")
+![](results/1/images/n2.png "Depth 1")
+![](results/1/images/n3.png "Depth 1")
+![](results/1/images/n4.png "Depth 1")
 
-### R
-
-```
-        [8 , 17]                    [U , F ]
-        [10, 19]                    [U , F ]
-[4 , 5 ][16, 13][2 , 0 ]    [L , L ][F , D ][R , R ]
-[6 , 7 ][18, 15][3 , 1 ]    [L , L ][F , D ][R , R ]
-        [12, 21]                    [D , B ]
-        [14, 23]                    [D , B ]
-        [20, 9 ]                    [B , U ]
-        [22, 11]                    [B , U ]
-```
-
-### L
-
-```
-        [20, 9 ]                    [B , U ]
-        [22, 11]                    [B , U ]
-[6 , 4 ][8 , 17][0 , 1 ]    [L , L ][U , F ][R , R ]
-[7 , 5 ][10, 19][2 , 3 ]    [L , L ][U , F ][R , R ]
-        [16, 13]                    [F , D ]
-        [18, 15]                    [F , D ]
-        [12, 21]                    [D , B ]
-        [14, 23]                    [D , B ]
-```
-
-### U
-
-```
-        [10, 8 ]                    [U , U ]
-        [11, 9 ]                    [U , U ]
-[16, 17][0 , 1 ][23, 22]    [F , F ][R , R ][B , B ]
-[6 , 7 ][18, 19][2 , 3 ]    [L , L ][F , F ][R , R ]
-        [12, 13]                    [D , D ]
-        [14, 15]                    [D , D ]
-        [20, 21]                    [B , B ]
-        [5 , 4 ]                    [L , L ]
-```
-
-### D
-
-```
-        [8 , 9 ]                    [U , U ]
-        [10, 11]                    [U , U ]
-[4 , 5 ][16, 17][0 , 1 ]    [L , L ][F , F ][R , R ]
-[21, 20][6 , 7 ][18, 19]    [B , B ][L , L ][F , F ]
-        [14, 12]                    [D , D ]
-        [15, 13]                    [D , D ]
-        [3 , 2 ]                    [R , R ]
-        [22, 23]                    [B , B ]
-```
-
-### F
-
-```
-        [8 , 9 ]                    [U , U ]
-        [7 , 5 ]                    [L , L ]
-[4 , 12][18, 16][10, 1 ]    [L , D ][F , F ][U , R ]
-[6 , 13][19, 17][11, 3 ]    [L , D ][F , F ][U , R ]
-        [2 , 0 ]                    [R , R ]
-        [14, 15]                    [D , D ]
-        [20, 21]                    [B , B ]
-        [22, 23]                    [B , B ]
-```
-
-### B
-
-```
-        [1 , 3 ]                    [R , R ]
-        [10, 11]                    [U , U ]
-[9 , 5 ][16, 17][0 , 15]    [U , L ][F , F ][R , D ]
-[8 , 7 ][18, 19][2 , 14]    [U , L ][F , F ][R , D ]
-        [12, 13]                    [D , D ]
-        [4 , 6 ]                    [L , L ]
-        [22, 20]                    [B , B ]
-        [23, 21]                    [B , B ]
-```
+![](results/1/images/s2.png "Solutions 2x2x2")
+![](results/1/images/s3.png "Solutions 3x3x3")
+![](results/1/images/s4.png "Solutions 4x4x4")
+![](results/1/images/s5.png "Solutions 5x5x5")
+![](results/1/images/s6.png "Solutions 6x6x6")
+![](results/1/images/s7.png "Solutions 7x7x7")
+![](results/1/images/s8.png "Solutions 8x8x8")
+![](results/1/images/s9.png "Solutions 9x9x9")
+![](results/1/images/s10.png "Solutions 10x10x10")
