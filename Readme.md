@@ -1,4 +1,4 @@
-# Cube
+# BFS, IDFS, UCS and A* for a NxNxN Rubik's Cube
 
 ## Cubes
 ![](results/1/images/2.png "Cube 2x2x2")
