@@ -41,10 +41,12 @@ class Solver:
         elif self.algorithm == 'A* 1':
             result = self.ASTAR(1)
         end = time.time()
+        self.problem.print_sequence(result)
         if result == 'TimeOut':
             save(self.algorithm, -1, -1, self.problem.n, -1, self.start_time, -1, str(self.problem.sequence).count(","))
         else:
             save(self.algorithm, end - self.start, self.num_visited, self.problem.n, self.problem.sequence[:-1], self.start_time, self.max_mem, str(self.problem.sequence).count(","))
+        return
 
     def print_nodes(self):
         pass
@@ -52,6 +54,7 @@ class Solver:
 
     def BFS(self):
         queue = ['']
+        visited = [str(self.problem.cube)]
 
         while queue:
             if (time.time() - self.start) > self.time_limit:
@@ -65,10 +68,14 @@ class Solver:
 
             for neighbour in self.problem.successors(path):
                 new_path = f'{path}{neighbour},'
-                if new_path not in queue:
+                solution, cube = self.problem.is_target(new_path)
+
+                if str(cube) not in visited:
+                    if solution:
+                        return new_path
+
                     queue.append(new_path)
-                if self.problem.is_target(new_path):
-                    return new_path
+                    visited.append(str(cube))
 
     def IDFS(self):
         for depth in itertools.count():
@@ -78,7 +85,7 @@ class Solver:
             elif not remaining:
                 return None
 
-    def DLS(self, route, depth, count):
+    def DLS(self, path, depth, count):
         count += 1
         if self.max_mem < count:
             self.max_mem = count
@@ -88,14 +95,15 @@ class Solver:
         self.num_visited += 1
 
         if depth == 0:
-            if self.problem.is_target(route):
-                return route, True
+            solution, _ = self.problem.is_target(path)
+            if solution:
+                return path, True
             else:
                 return None, True
 
         any_remaining = False
-        for move in self.problem.successors(route):
-            found, remaining = self.DLS(route + move + ',', depth - 1, count)
+        for move in self.problem.successors(path):
+            found, remaining = self.DLS(path + move + ',', depth - 1, count)
             if found:
                 return found, True
             if remaining:
@@ -115,14 +123,16 @@ class Solver:
             if self.max_mem < queue.qsize():
                 self.max_mem = queue.qsize()
 
-            cost, path = queue.get()
+            cost, path = queue.get_nowait()
 
             for neighbour in self.problem.successors(path):
                 new_path = f'{path}{neighbour},'
-                queue.put((cost + 1, new_path))
+                solution, cube = self.problem.is_target(new_path)
 
-                if self.problem.is_target(new_path):
+                if solution:
                     return new_path
+
+                queue.put((cost + 1, new_path))
 
     def heuristic1(self):
         total = 0
@@ -196,6 +206,7 @@ class Solver:
         queue = PriorityQueue()
         queue.put((0, ''))
         cost_so_far = {'': 0}
+        visited = [str(self.problem.cube)]
 
         while queue:
             if (time.time() - self.start) > self.time_limit:
@@ -204,19 +215,23 @@ class Solver:
             self.num_visited += 1
             if self.max_mem < queue.qsize():
                 self.max_mem = queue.qsize()
-            cost, path = queue.get()
+
+            cost, path = queue.get_nowait()
 
             for neighbour in self.problem.successors(path):
                 new_path = f'{path}{neighbour},'
                 new_cost = cost + 1
+                solution, cube = self.problem.is_target(new_path)
 
-                if self.problem.is_target(new_path):
-                    return new_path
+                if str(cube) not in visited:
+                    if solution:
+                        return new_path
 
-                if neighbour not in cost_so_far or new_cost < cost_so_far[new_path]:
-                    cost_so_far[new_path] = new_cost
-                    if heuristic == 0:
-                        priority = new_cost + self.heuristic1()
-                    else:
-                        priority = new_cost + self.heuristic2()
-                    queue.put((priority, new_path))
+                    if neighbour not in cost_so_far or new_cost < cost_so_far[new_path]:
+                        cost_so_far[new_path] = new_cost
+                        if heuristic == 0:
+                            priority = new_cost + self.heuristic1()
+                        else:
+                            priority = new_cost + self.heuristic2()
+                        queue.put((priority, new_path))
+                        visited.append(str(cube))

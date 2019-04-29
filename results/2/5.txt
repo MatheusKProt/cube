@@ -1,0 +1,2 @@
+{'algorithm': 'A* 1', 'sequence': '2-D-2,1-F-1,1-R-3', 'time': 0.45671725273132324, 'nodes': 24, 'memory': 689, 'depth': 3}
+{'algorithm': 'A* 1', 'sequence': '2-R-3,2-D-1,1-L-3,2-L-2,1-L-2', 'time': 6.376051187515259, 'nodes': 170, 'memory': 5115, 'depth': 5}

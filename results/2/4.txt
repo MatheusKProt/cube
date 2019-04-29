@@ -1,0 +1,10 @@
+{'algorithm': 'A* 1', 'sequence': '1-U-1', 'time': 0.0029981136322021484, 'nodes': 1, 'memory': 1, 'depth': 1}
+{'algorithm': 'IDFS', 'sequence': '1-U-1', 'time': 0.0019989013671875, 'nodes': 11, 'memory': 2, 'depth': 1}
+{'algorithm': 'A* 0', 'sequence': '1-U-1', 'time': 2.722313642501831, 'nodes': 121, 'memory': 3393, 'depth': 1}
+{'algorithm': 'BFS', 'sequence': '1-U-1', 'time': 0.0019989013671875, 'nodes': 1, 'memory': 1, 'depth': 1}
+{'algorithm': 'UCS', 'sequence': '1-U-1', 'time': 0.0029990673065185547, 'nodes': 1, 'memory': 1, 'depth': 1}
+{'algorithm': 'A* 1', 'sequence': '1-U-1', 'time': 0.0029969215393066406, 'nodes': 1, 'memory': 1, 'depth': 1}
+{'algorithm': 'IDFS', 'sequence': '1-U-1', 'time': 0.001998424530029297, 'nodes': 11, 'memory': 2, 'depth': 1}
+{'algorithm': 'A* 0', 'sequence': '1-U-1', 'time': 2.74929141998291, 'nodes': 121, 'memory': 3393, 'depth': 1}
+{'algorithm': 'BFS', 'sequence': '1-U-1', 'time': 0.001999378204345703, 'nodes': 1, 'memory': 1, 'depth': 1}
+{'algorithm': 'UCS', 'sequence': '1-U-1', 'time': 0.0019991397857666016, 'nodes': 1, 'memory': 1, 'depth': 1}

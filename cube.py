@@ -64,7 +64,7 @@ class Cube:
             text = "Scramble: "
         for seq in sequence.split(',')[:-1]:
             seq = seq.split('-')
-            if seq[0] == '1':
+            if seq[0] == '1' or seq[0] == '0':
                 text += seq[1]
             else:
                 text += seq[0] + seq[1]
@@ -103,6 +103,11 @@ class Cube:
             suc.append(f'{i}-B-1')
             suc.append(f'{i}-B-2')
             suc.append(f'{i}-B-3')
+
+        if divmod(self.n, 2)[1] == 1:
+            suc += ['0-M-1', '0-M-2', '0-M-3',
+                    '0-E-1', '0-E-2', '0-E-3',
+                    '0-S-1', '0-S-2', '0-S-3']
 
         if path:
             for s in suc:
@@ -155,6 +160,7 @@ class Cube:
         self.cube = cube
         suc = str(suc).split('-')
         row = int(suc[0]) - 1
+
         if suc[0] == '1':
             self.cube[suc[1]] = np.rot90(np.array(self.cube[suc[1]]), -int(suc[2])).tolist()
 
@@ -254,6 +260,58 @@ class Cube:
                             [['R', 1], ['D', 2]],
                             [['D', 2], ['L', -1]],
                             [['L', -1], ['U', 0]]], row)
+        elif suc[1] == 'M':
+            row = self.n // 2
+            if suc[2] == '1':
+                self.move_([[['B', -1], ['U', -1]],
+                            [['D', -1], ['B', -1]],
+                            [['F', -1], ['D', -1]],
+                            [['U', -1], ['F', -1]]], row)
+            elif suc[2] == '2':
+                self.move_([[['F', -1], ['B', -1]],
+                            [['B', -1], ['F', -1]],
+                            [['U', -1], ['D', -1]],
+                            [['D', -1], ['U', -1]]], row)
+            elif suc[2] == '3':
+                self.move_([[['F', -1], ['U', -1]],
+                            [['D', -1], ['F', -1]],
+                            [['B', -1], ['D', -1]],
+                            [['U', -1], ['B', -1]]], row)
+        elif suc[1] == 'E':
+            row = self.n // 2
+            if suc[2] == '1':
+                self.move_([[['L', 2], ['F', 2]],
+                            [['F', 2], ['R', 2]],
+                            [['R', 2], ['B', 0]],
+                            [['B', 0], ['L', 2]]], row)
+            elif suc[2] == '2':
+                self.move_([[['R', 2], ['L', 2]],
+                            [['L', 2], ['R', 2]],
+                            [['B', 0], ['F', 2]],
+                            [['F', 2], ['B', 0]]], row)
+            elif suc[2] == '3':
+                self.move_([[['R', 2], ['F', 2]],
+                            [['F', 2], ['L', 2]],
+                            [['L', 2], ['B', 0]],
+                            [['B', 0], ['R', 2]]], row)
+        elif suc[1] == 'S':
+            row = self.n // 2
+            if suc[2] == '1':
+                self.move_([[['U', 2], ['R', -1]],
+                            [['R', -1], ['D', 0]],
+                            [['D', 0], ['L', 1]],
+                            [['L', 1], ['U', 2]]], row)
+            elif suc[2] == '2':
+                self.move_([[['R', -1], ['L', 1]],
+                            [['L', 1], ['R', -1]],
+                            [['D', 0], ['U', 2]],
+                            [['U', 2], ['D', 0]]], row)
+            elif suc[2] == '3':
+                self.move_([[['U', 2], ['L', 1]],
+                            [['L', 1], ['D', 0]],
+                            [['D', 0], ['R', -1]],
+                            [['R', -1], ['U', 2]]], row)
+
         return self.cube
 
     def is_target(self, path):
@@ -262,8 +320,8 @@ class Cube:
             for cc in cube[face]:
                 for c in cc:
                     if c[0] != cube[face][0][0][0]:
-                        return False
-        return True
+                        return False, cube
+        return True, cube
 
     def apply_path(self, path):
         cube = self.start.copy()
