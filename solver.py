@@ -52,6 +52,7 @@ class Solver:
 
     def BFS(self):
         queue = ['']
+
         while queue:
             if (time.time() - self.start) > self.time_limit:
                 return 'TimeOut'
@@ -59,9 +60,10 @@ class Solver:
             self.num_visited += 1
             if self.max_mem < len(queue):
                 self.max_mem = len(queue)
+
             path = queue.pop(0)
 
-            for neighbour in self.problem.successors():
+            for neighbour in self.problem.successors(path):
                 new_path = f'{path}{neighbour},'
                 if new_path not in queue:
                     queue.append(new_path)
@@ -92,7 +94,7 @@ class Solver:
                 return None, True
 
         any_remaining = False
-        for move in self.problem.successors():
+        for move in self.problem.successors(route):
             found, remaining = self.DLS(route + move + ',', depth - 1, count)
             if found:
                 return found, True
@@ -115,7 +117,7 @@ class Solver:
 
             cost, path = queue.get()
 
-            for neighbour in self.problem.successors():
+            for neighbour in self.problem.successors(path):
                 new_path = f'{path}{neighbour},'
                 queue.put((cost + 1, new_path))
 
@@ -124,47 +126,21 @@ class Solver:
 
     def heuristic1(self):
         total = 0
-        for right in self.problem.cube['R']:
-            for r in right:
-                if r[0] != 'R':
-                    total += 1
-        for left in self.problem.cube['L']:
-            for l in left:
-                if l[0] != 'L':
-                    total += 1
-        for front in self.problem.cube['F']:
-            for f in front:
-                if f[0] != 'F':
-                    total += 1
-        for back in self.problem.cube['B']:
-            for b in back:
-                if b[0] != 'G':
-                    total += 1
-        for up in self.problem.cube['U']:
-            for u in up:
-                if u[0] != 'U':
-                    total += 1
-        for down in self.problem.cube['D']:
-            for d in down:
-                if d[0] != 'D':
-                    total += 1
+        for face in ['R', 'L', 'U', 'D', 'F', 'B']:
+            for cube in self.problem.cube[face]:
+                for c in cube:
+                    if c[0] != face:
+                        total += 1
         return total
 
     def heuristic2(self):
         total = 0
 
+        i, j = divmod(self.problem.n - 1, self.problem.n)
         ul = 1
-        ur = 0
-        dl = 0
+        ur = i * i + j + i + 1
+        dl = j * j + i + j + 1
         dr = self.problem.n * self.problem.n
-        count = 0
-        for i in range(self.problem.n):
-            for j in range(self.problem.n):
-                count += 1
-                if i == 0 and j == self.problem.n - 1:
-                    ur = count
-                elif i == self.problem.n - 1 and j == 0:
-                    dl = count
 
         target = self.problem.cube['F'][0][0]
         if target == f'F{ul}':
@@ -213,6 +189,7 @@ class Solver:
             total += 1
         else:
             total += 2
+
         return total
 
     def ASTAR(self, heuristic):
@@ -229,7 +206,7 @@ class Solver:
                 self.max_mem = queue.qsize()
             cost, path = queue.get()
 
-            for neighbour in self.problem.successors():
+            for neighbour in self.problem.successors(path):
                 new_path = f'{path}{neighbour},'
                 new_cost = cost + 1
 

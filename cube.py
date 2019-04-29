@@ -76,13 +76,14 @@ class Cube:
                 text += " "
         print(f'{text}\n')
 
-    def successors(self):
+    def successors(self, path):
         suc = ['1-R-1', '1-R-2', '1-R-3',
                '1-L-1', '1-L-2', '1-L-3',
                '1-U-1', '1-U-2', '1-U-3',
                '1-D-1', '1-D-2', '1-D-3',
                '1-F-1', '1-F-2', '1-F-3',
                '1-B-1', '1-B-2', '1-B-3']
+
         for i in range(2, int(self.n/2) + 1):
             suc.append(f'{i}-R-1')
             suc.append(f'{i}-R-2')
@@ -103,6 +104,10 @@ class Cube:
             suc.append(f'{i}-B-2')
             suc.append(f'{i}-B-3')
 
+        if path:
+            for s in suc:
+                if s == path.split(",")[:-1][-1]:
+                    suc.pop(suc.index(s.split("-")[0] + '-' + s.split("-")[1] + '-' + str(4 - int(s.split("-")[2]))))
         return suc
 
     def scramble(self, cube, num_moves, sequence=None):
@@ -111,7 +116,7 @@ class Cube:
                 cube = self.move(cube, seq)
             self.sequence = sequence + ','
         else:
-            suc = self.successors()
+            suc = self.successors("")
             a = []
             for _ in range(num_moves):
                 i = random.randint(0, len(suc) - 1)
@@ -253,7 +258,12 @@ class Cube:
 
     def is_target(self, path):
         cube = self.apply_path(path)
-        return self.goal == cube
+        for face in ['R', 'L', 'U', 'D', 'F', 'B']:
+            for cc in cube[face]:
+                for c in cc:
+                    if c[0] != cube[face][0][0][0]:
+                        return False
+        return True
 
     def apply_path(self, path):
         cube = self.start.copy()
