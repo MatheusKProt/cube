@@ -1,5 +1,16 @@
 # BFS, IDFS, UCS and A* for a NxNxN Rubik's Cube
 
+## Algorithms
+- [BFS](solver.py#L53)
+
+- [IDFS](solver.py#L71)
+
+- [UCS](solver.py#L104)
+
+- [A*](solver.py#L218)
+  - [Heuristic 1](solver.py#L125)
+  - [Heuristic 2](solver.py#L153)
+
 ## Cubes
 ![](results/1/images/2.png "Cube 2x2x2")
 ![](results/1/images/3.png "Cube 3x3x3")
