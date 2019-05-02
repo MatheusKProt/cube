@@ -30,6 +30,7 @@ class Solver:
     def solve(self):
         result = None
         self.start = time.time()
+        print(self.algorithm)
         if self.algorithm == 'BFS':
             result = self.BFS()
         elif self.algorithm == 'IDFS':
@@ -42,9 +43,7 @@ class Solver:
             result = self.ASTAR(1)
         end = time.time()
         self.problem.print_sequence(result)
-        if result == 'TimeOut':
-            save(self.algorithm, -1, -1, self.problem.n, -1, self.start_time, -1, str(self.problem.sequence).count(","))
-        else:
+        if result != 'TimeOut':
             save(self.algorithm, end - self.start, self.num_visited, self.problem.n, self.problem.sequence[:-1], self.start_time, self.max_mem, str(self.problem.sequence).count(","))
         return
 

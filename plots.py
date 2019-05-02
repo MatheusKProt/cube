@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-import read_file
+from plots import read_file
 
 figsize = (9.6, 6)
 depth = [1, 5]

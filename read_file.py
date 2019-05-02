@@ -2,7 +2,7 @@ from ast import literal_eval
 
 
 def main(n, path):
-    file = open(f'results/{path}/{n}.txt', 'r')
+    file = open(f'../results/{path}/{n}.txt', 'r')
     dados = []
     saida = {
         'BFS': {'sequence': [], 'time': [], 'nodes': [], 'memory': [], 'depth': []},
@@ -24,8 +24,8 @@ def main(n, path):
     for dado in dados:
         saida[dado['algorithm']]['sequence'].append(dado['sequence'])
         saida[dado['algorithm']]['time'].append(dado['time'])
-        saida[dado['algorithm']]['nodes'].append(dado['nodes'])
-        saida[dado['algorithm']]['memory'].append(dado['memory'])
-        if dado['sequence'] != -1:
-            saida[dado['algorithm']]['depth'].append(dado['depth'])
+        saida[dado['algorithm']]['nodes'].append(float(dado['nodes']))
+        saida[dado['algorithm']]['memory'].append(float(dado['memory']))
+        saida[dado['algorithm']]['depth'].append(float(dado['depth']))
+
     return saida
