@@ -23,7 +23,7 @@
 ![](results/visitados4.png "Cube 4x4x4")
 ![](results/visitados5.png "Cube 5x5x5")
 
-## Nodes stored in Memory
+## Nodes Stored in Memory
 ![](results/memoria2.png "Cube 2x2x2")
 ![](results/memoria3.png "Cube 3x3x3")
 ![](results/memoria4.png "Cube 4x4x4")
