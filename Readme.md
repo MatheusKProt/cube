@@ -1,15 +1,16 @@
 # BFS, IDFS, UCS and A* implementation for a NxNxN Rubik's Cube
+- [Artigo](Intelig%C3%AAncia%20Artificial%20-%20T1%20-%20Matheus%20K%20Protzen.pdf)
 
 ## Algorithms
-- [BFS](solver.py#L53)
+- [BFS](solver.py#L54)
 
-- [IDFS](solver.py#L71)
+- [IDFS](solver.py#L79)
 
-- [UCS](solver.py#L104)
+- [UCS](solver.py#L113)
 
-- [A*](solver.py#L218)
-  - [Heuristic 1](solver.py#L125)
-  - [Heuristic 2](solver.py#L153)
+- [A*](solver.py#L204)
+  - [Heuristic 1](solver.py#L136)
+  - [Heuristic 2](solver.py#L145)
 
 ## Time
 ![](results/tempo2.png "Cube 2x2x2")
